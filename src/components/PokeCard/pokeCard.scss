@@ -1,0 +1,24 @@
+.PokeCard {
+  min-width: 240px;
+  min-height: 366px;
+  margin-top: 10px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+
+  .pokePic {
+    width: 100%;
+    border: 1px solid red;
+  }
+}
+
+.HiddenCard {
+  max-width: 240px;
+  max-height: 366px;
+
+  img {
+    width: 100%;
+  }
+}
