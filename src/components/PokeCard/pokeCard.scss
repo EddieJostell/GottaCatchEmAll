@@ -15,8 +15,9 @@
 }
 
 .HiddenCard {
-  max-width: 240px;
-  max-height: 366px;
+  min-width: 240px;
+  min-height: 366px;
+  background-color: rgb(87, 4, 4);
 
   img {
     width: 100%;
