@@ -4,13 +4,6 @@ import './App.scss';
 import { IntroScreen } from './components/IntroScreen/IntoScreen';
 import { PokeCard } from './components/PokeCard/PokeCard';
 
-/* interface ICardsState {
-  oneCard: boolean;
-  onePack: boolean;
-
-  pokemonArray: [];
-} */
-
 //Game Engine
 function App() {
   //Start Game State
@@ -23,7 +16,7 @@ function App() {
   );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
 
-  const [showPokemons, setShowPokemons] = useState<boolean>(false);
+  const [countCoins, setCountCoins] = useState<number>(5);
 
   const [cardArray, setCardArray] = useState<any>([]);
 
@@ -60,6 +53,7 @@ function App() {
     const oneCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
     cardArray.unshift(oneCard);
     setCardArray([...cardArray]);
+    setCountCoins(countCoins - 1);
   };
 
   return (
@@ -67,8 +61,17 @@ function App() {
       {startGame ? (
         <Fragment>
           <button>Show pokedex:</button>
-          <div>Coins: 5</div>
-          <button onClick={buyOneCard}>Buy one card</button>
+          {countCoins !== 0 ? (
+            <div>Coins: {countCoins}</div>
+          ) : (
+            <div>OH NOES YOU HAVE NO MORE COINS!</div>
+          )}
+          {countCoins !== 0 ? (
+            <button onClick={buyOneCard}>Buy one card</button>
+          ) : (
+            <button>Earn more coins</button>
+          )}
+
           <div className='pokemon-container'>
             {cardArray.map((pokemon: any, index: any) => (
               <PokeCard
