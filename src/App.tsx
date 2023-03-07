@@ -1,7 +1,15 @@
-import React, { Fragment, useEffect, useState } from "react";
-import "./App.scss";
-import { IntroScreen } from "./components/IntroScreen/IntoScreen";
-import { PokeCard } from "./components/PokeCard/PokeCard";
+import React, { Fragment, useEffect, useState } from 'react';
+import { Value } from 'sass';
+import './App.scss';
+import { IntroScreen } from './components/IntroScreen/IntoScreen';
+import { PokeCard } from './components/PokeCard/PokeCard';
+
+/* interface ICardsState {
+  oneCard: boolean;
+  onePack: boolean;
+
+  pokemonArray: [];
+} */
 
 //Game Engine
 function App() {
@@ -10,8 +18,14 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=50");
+  const [loadPoke, setLoadPoke] = useState(
+    'https://pokeapi.co/api/v2/pokemon?limit=20'
+  );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
+
+  const [showPokemons, setShowPokemons] = useState<boolean>(false);
+
+  const [cardArray, setCardArray] = useState<any>([]);
 
   const handleStartGame = () => {
     setStartGame(true);
@@ -24,7 +38,9 @@ function App() {
 
     function createPokemonObject(result: any[]) {
       result.forEach(async (pokemon) => {
-        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        const res = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+        );
         const data = await res.json();
         setAllPokemons((currentList: any) => [...currentList, data]);
       });
@@ -35,12 +51,15 @@ function App() {
     getAllPokemons();
   }, []);
 
-  let randomizePokemons = allPokemons.sort(() => 0.5 - Math.random()).slice(0, 3);
-
-  console.log("Collected Pokemons", collectedPokemons);
-
-  const handleCollectPokemon = (poke: any) => {
+  const handleCollectPokemon = (poke: any, index: number) => {
     setCollectedPokemons((currentPokemons: any) => [...currentPokemons, poke]);
+    setCardArray(cardArray.filter((value: any, i: any) => i !== index));
+  };
+
+  const buyOneCard = () => {
+    const oneCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
+    cardArray.unshift(oneCard);
+    setCardArray([...cardArray]);
   };
 
   return (
@@ -49,16 +68,16 @@ function App() {
         <Fragment>
           <button>Show pokedex:</button>
           <div>Coins: 5</div>
-          <button>Buy cards</button>
-          <div className="pokemon-container">
-            {randomizePokemons.map((pokemon: any, index: any) => (
+          <button onClick={buyOneCard}>Buy one card</button>
+          <div className='pokemon-container'>
+            {cardArray.map((pokemon: any, index: any) => (
               <PokeCard
                 key={index}
                 id={pokemon.id}
                 sprites={pokemon.sprites.front_default}
                 types={pokemon.types}
                 name={pokemon.name}
-                addPokemonClick={() => handleCollectPokemon(pokemon)}
+                addPokemonClick={() => handleCollectPokemon(pokemon, index)}
               />
             ))}
           </div>
