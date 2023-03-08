@@ -1,15 +1,17 @@
-import React, { Fragment, FunctionComponent } from "react";
+import React, { Fragment, FunctionComponent } from 'react';
 
 export interface IIntroScreen {
-  onClick: () => void;
+  handleStartGame: () => void;
 }
 
-export const IntroScreen: FunctionComponent<IIntroScreen> = (props: IIntroScreen): JSX.Element => {
-  const { onClick } = props;
+export const IntroScreen: FunctionComponent<IIntroScreen> = (
+  props: IIntroScreen
+): JSX.Element => {
+  const { handleStartGame } = props;
   return (
     <Fragment>
-      <h1>Welcome To App</h1>
-      <button onClick={onClick}>Start Game</button>
+      <h1>Welcome young trainer its time to begin your journey!</h1>
+      <button onClick={handleStartGame}>Start Game</button>
     </Fragment>
   );
 };
