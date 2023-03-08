@@ -24,22 +24,24 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
   } = props;
   return (
     <div className='Dashboard'>
-      <div>
-        <h1>Welcome young trainer its time to begin your journey!</h1>
-      </div>
       {startGame ? (
         <IntroScreen handleStartGame={handleStartGame} />
       ) : (
-        <div className='controls'>
-          <button onClick={cheatButton}>CHEAT BUTTON! GET 100 COINS</button>
-          <button>Show pokedex:</button>
-          <h2>Coins Collected: {coins}</h2>
-          <button disabled={coins < 5} onClick={buyOneCard}>
-            Buy one card: COST 5 COINS
-          </button>
-          <button disabled={coins < 25} onClick={buyPack}>
-            Buy Pack (5): COST 25 COINS
-          </button>
+        <div>
+          <div>
+            <h1>TIME TO CATCH EM ALL!</h1>
+          </div>
+          <div className='controls'>
+            <button onClick={cheatButton}>CHEAT BUTTON! GET 100 COINS</button>
+            <button>Show pokedex:</button>
+            <h2>Coins Collected: {coins}</h2>
+            <button disabled={coins < 5} onClick={buyOneCard}>
+              Buy one card: COST 5 COINS
+            </button>
+            <button disabled={coins < 25} onClick={buyPack}>
+              Buy Pack (5): COST 25 COINS
+            </button>
+          </div>
         </div>
       )}
     </div>

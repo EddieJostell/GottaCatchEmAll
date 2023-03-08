@@ -10,6 +10,7 @@ export const IntroScreen: FunctionComponent<IIntroScreen> = (
   const { handleStartGame } = props;
   return (
     <Fragment>
+      <h1>Welcome young trainer its time to begin your journey!</h1>
       <button onClick={handleStartGame}>Start Game</button>
     </Fragment>
   );
