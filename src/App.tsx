@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { IntroScreen } from "./components/IntroScreen/IntoScreen";
 import { PokeCard } from "./components/PokeCard/PokeCard";
+import { PokeDex } from "./components/PokeDex/PokeDex";
 import "./App.scss";
 
 //Game Engine
@@ -42,6 +43,16 @@ function App() {
     setCardArray(cardArray.filter((value: any, i: any) => i !== index));
   };
 
+  const handleReleasePokemon = (index: number) => {
+    let randomNr = Math.floor(Math.random() * 100);
+
+    if (randomNr >= 80) {
+      alert("You got coins for releasing Pokemon! Lucky bastard");
+      setCoins(coins + 5);
+    }
+    setCardArray(cardArray.filter((value: any, i: any) => i !== index));
+  };
+
   const buyPack = () => {
     for (let i = 0; i < 5; i++) {
       const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
@@ -58,14 +69,12 @@ function App() {
     setCoins(coins - 5);
   };
 
-  console.log("collected", collectedPokemons)
-
   return (
     <Fragment>
       {startGame ? (
         <Fragment>
           <button onClick={() => setCoins(coins + 100)}>CHEAT BUTTON! GET 100 COINS</button>
-          <button>Show pokedex:</button>
+          {<PokeDex collectedPokemons={collectedPokemons} />}
           <div>I HAVE Coins: {coins}</div>
           <button disabled={coins < 5} onClick={buyOneCard}>
             Buy one card: COST 5 COINS
@@ -82,6 +91,7 @@ function App() {
                 types={pokemon.types}
                 name={pokemon.name}
                 addPokemonClick={() => handleCollectPokemon(pokemon, index)}
+                releasePokemonClick={() => handleReleasePokemon(index)}
               />
             ))}
           </div>

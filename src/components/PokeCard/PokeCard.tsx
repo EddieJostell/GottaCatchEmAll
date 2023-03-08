@@ -8,11 +8,12 @@ export interface IPokeCardProps {
   sprites: string;
   types: any;
   name: string;
-  addPokemonClick: any;
+  addPokemonClick: () => any;
+  releasePokemonClick: () => any;
 }
 
 export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProps): JSX.Element => {
-  const { id, sprites, types, name, addPokemonClick } = props;
+  const { id, sprites, types, name, addPokemonClick, releasePokemonClick } = props;
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const handleTypeArray = (valueType: []) => {
@@ -90,8 +91,11 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProp
               {name.toLocaleUpperCase()}
             </CardSubtitle>
             <CardText>{handleTypeArray(types)}</CardText>
-            <Button size="sm" block outline onClick={addPokemonClick}>
+            <Button className="mb-2" size="sm" block outline onClick={addPokemonClick}>
               Add to Pokedex
+            </Button>
+            <Button size="sm" block outline onClick={releasePokemonClick}>
+              Release Pokemon
             </Button>
           </CardBody>
         </Card>
