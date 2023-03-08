@@ -10,7 +10,7 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=20");
+  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=200");
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
   const [coins, setCoins] = useState<number>(50);
   const [cardArray, setCardArray] = useState<any>([]);
@@ -57,6 +57,8 @@ function App() {
     setCardArray([...cardArray]);
     setCoins(coins - 5);
   };
+
+  console.log("collected", collectedPokemons)
 
   return (
     <Fragment>

@@ -1,9 +1,31 @@
-.pokeCard {
+.pokeCardContainer {
   min-width: 240px;
   min-height: 366px;
 
+  .card {
+    background-color: #ffead8;
+    position: relative;
+    padding: 6px;
+    border: none;
+
+    .card-title {
+      position: absolute;
+      right: 2px;
+      top: 2px;
+      background: #7e5555;
+      border-radius: 50%;
+      padding: 4px;
+      color: #fff;
+    }
+
+    .card-text {
+      font-style: italic;
+    }
+  }
+
   .pokeImg {
-    background-color: rgb(38, 150, 248);
+    /*     border-radius: 50%; */
+    border-radius: 6px;
   }
 }
 
