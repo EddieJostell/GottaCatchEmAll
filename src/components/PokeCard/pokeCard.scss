@@ -1,20 +1,13 @@
-.PokeCard {
+.pokeCard {
   min-width: 240px;
   min-height: 366px;
-  margin-top: 10px;
-  border: 1px solid black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 5px;
 
-  .pokePic {
-    width: 100%;
-    border: 1px solid red;
+  .pokeImg {
+    background-color: rgb(38, 150, 248);
   }
 }
 
-.HiddenCard {
+.hiddenCard {
   min-width: 240px;
   min-height: 366px;
   background-color: rgb(87, 4, 4);

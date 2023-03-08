@@ -1,15 +1,7 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Value } from 'sass';
-import './App.scss';
-import { IntroScreen } from './components/IntroScreen/IntoScreen';
-import { PokeCard } from './components/PokeCard/PokeCard';
-
-/* interface ICardsState {
-  oneCard: boolean;
-  onePack: boolean;
-
-  pokemonArray: [];
-} */
+import React, { Fragment, useEffect, useState } from "react";
+import { IntroScreen } from "./components/IntroScreen/IntoScreen";
+import { PokeCard } from "./components/PokeCard/PokeCard";
+import "./App.scss";
 
 //Game Engine
 function App() {
@@ -18,13 +10,9 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState(
-    'https://pokeapi.co/api/v2/pokemon?limit=20'
-  );
+  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=20");
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
-
-  const [showPokemons, setShowPokemons] = useState<boolean>(false);
-
+  const [coins, setCoins] = useState<number>(50);
   const [cardArray, setCardArray] = useState<any>([]);
 
   const handleStartGame = () => {
@@ -38,9 +26,7 @@ function App() {
 
     function createPokemonObject(result: any[]) {
       result.forEach(async (pokemon) => {
-        const res = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-        );
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
         const data = await res.json();
         setAllPokemons((currentList: any) => [...currentList, data]);
       });
@@ -56,20 +42,36 @@ function App() {
     setCardArray(cardArray.filter((value: any, i: any) => i !== index));
   };
 
+  const buyPack = () => {
+    for (let i = 0; i < 5; i++) {
+      const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
+      cardArray.push(randomCard);
+      setCardArray([...cardArray]);
+      setCoins(coins - 25);
+    }
+  };
+
   const buyOneCard = () => {
-    const oneCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
-    cardArray.unshift(oneCard);
+    const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
+    cardArray.push(randomCard);
     setCardArray([...cardArray]);
+    setCoins(coins - 5);
   };
 
   return (
     <Fragment>
       {startGame ? (
         <Fragment>
+          <button onClick={() => setCoins(coins + 100)}>CHEAT BUTTON! GET 100 COINS</button>
           <button>Show pokedex:</button>
-          <div>Coins: 5</div>
-          <button onClick={buyOneCard}>Buy one card</button>
-          <div className='pokemon-container'>
+          <div>I HAVE Coins: {coins}</div>
+          <button disabled={coins < 5} onClick={buyOneCard}>
+            Buy one card: COST 5 COINS
+          </button>
+          <button disabled={coins < 25} onClick={buyPack}>
+            Buy Pack (5): COST 25 COINS
+          </button>
+          <div className="pokemon-container">
             {cardArray.map((pokemon: any, index: any) => (
               <PokeCard
                 key={index}

@@ -1,4 +1,5 @@
 import React, { Fragment, FunctionComponent, useState } from "react";
+import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from "reactstrap";
 import { motion } from "framer-motion";
 import "./pokeCard.scss";
 interface ITypeProps {
@@ -18,7 +19,7 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProp
   const handleTypeArray = (valueType: ITypeProps[]) => {
     if (Array.isArray(valueType)) {
       return valueType.map((type: any, index: number) => {
-        return <div key={index}>{type.type.name.toLocaleUpperCase()}</div>;
+        return <span key={index}>{type.type.name.toLocaleUpperCase()}</span>;
       });
     }
   };
@@ -26,21 +27,29 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProp
   const renderCardBackSide = () => {
     return (
       <motion.div
-        className="HiddenCard"
+        className="hiddenCard"
         onClick={() => setIsHidden(false)}
         whileHover={{ scale: 1.1, transition: { duration: 0.2 } }}
       ></motion.div>
     );
   };
 
+  /*   console.log("Types", types); */
+
   const renderCardFront = () => {
     return (
-      <motion.div className="PokeCard">
-        <div className="pokeIndex">{id}</div>
-        <div className="pokeName">{name.toLocaleUpperCase()}</div>
-        <img className="pokePic" alt="Pokemon Pic" src={sprites}></img>
-        <div className="pokeType">{handleTypeArray(types)}</div>
-        <button onClick={addPokemonClick}>Add to Pokedex</button>
+      <motion.div className="pokeCard">
+        <Card>
+          <img className="pokeImg" alt="Pokemon Pic" src={sprites} />
+          <CardBody>
+            <CardTitle tag="h5">{id}</CardTitle>
+            <CardSubtitle className="mb-2 text-muted" tag="h6">
+              {name.toLocaleUpperCase()}
+            </CardSubtitle>
+            <CardText>{handleTypeArray(types)}</CardText>
+            <Button onClick={addPokemonClick}>Add to Pokedex</Button>
+          </CardBody>
+        </Card>
       </motion.div>
     );
   };
