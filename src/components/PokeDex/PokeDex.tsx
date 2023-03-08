@@ -1,12 +1,14 @@
-import React, { Fragment, FunctionComponent, useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import "./pokeDex.scss";
+import React, { Fragment, FunctionComponent, useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import './pokeDex.scss';
 
 export interface IPokeDexProps {
   collectedPokemons: [];
 }
 
-export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps): JSX.Element => {
+export const PokeDex: FunctionComponent<IPokeDexProps> = (
+  props: IPokeDexProps
+): JSX.Element => {
   const { collectedPokemons } = props;
 
   const [modal, setModal] = useState<boolean>(false);
@@ -18,7 +20,7 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
     setModal(!modal);
   };
   const toggleNested = (storePokemon: any) => {
-    if (storePokemon.hasOwnProperty("name")) {
+    if (storePokemon.hasOwnProperty('name')) {
       setStoredPokemon(storePokemon);
     }
     setNestedModal(!nestedModal);
@@ -33,8 +35,12 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
     const sortedPokemonArray = collectedPokemons
       .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
       .map((pokemon: any, index: any) => (
-        <div className="col-2 collectedPokemonContainer" key={index} onClick={() => toggleNested(pokemon)}>
-          <img src={pokemon.sprites.front_default} />
+        <div
+          className='col-2 collectedPokemonContainer'
+          key={index}
+          onClick={() => toggleNested(pokemon)}
+        >
+          <img alt={pokemon.name} src={pokemon.sprites.front_default} />
           <p>{pokemon.name.toLocaleUpperCase()}</p>
           <p>{pokemon.id}</p>
         </div>
@@ -42,17 +48,17 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
 
     return (
       <Fragment>
-        <Button onClick={toggle}>Show PokeDex</Button>
-        <Modal isOpen={modal} toggle={toggle} size="lg" scrollable fade={false}>
+        <Button onClick={toggle}>Go To PokeDex</Button>
+        <Modal isOpen={modal} toggle={toggle} size='lg' scrollable fade={false}>
           <ModalHeader toggle={toggle}>PokeDex</ModalHeader>
           <ModalBody>
-            <div className="row">{sortedPokemonArray}</div>
+            <div className='row'>{sortedPokemonArray}</div>
             <ModalBody>
               <Modal
                 isOpen={nestedModal}
                 toggle={toggleNested}
                 onClosed={closeAll ? toggle : undefined}
-                size="md"
+                size='md'
                 scrollable
                 fade={false}
               >
@@ -65,10 +71,10 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
                   </Fragment>
                 )}
                 <ModalFooter>
-                  <Button color="primary" onClick={toggleNested}>
+                  <Button color='primary' onClick={toggleNested}>
                     Go back to PokeDex
                   </Button>
-                  <Button color="secondary" onClick={toggleAll}>
+                  <Button color='secondary' onClick={toggleAll}>
                     Go to Dashboard
                   </Button>
                 </ModalFooter>

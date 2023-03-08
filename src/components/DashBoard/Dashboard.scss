@@ -1,12 +1,87 @@
 .Dashboard {
   width: 100%;
-  height: 200px;
-  border: 1px solid red;
+  // border: 1px solid red;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  font-family: 'VT323', monospace;
 
-  .controls {
+  .Dashboard-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .title {
+      color: #fff;
+      font-size: 72px;
+    }
+
+    .controls {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .top {
+        width: 100%;
+        // border: 1px solid red;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      .bottom {
+        width: 100%;
+        // border: 1px solid red;
+        display: flex;
+        flex-direction: row;
+
+        .left {
+          //border: 1px solid red;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+
+          .one {
+            align-self: flex-end;
+            margin: 0 50px 20px 0;
+            &:hover {
+              background-color: blue;
+            }
+          }
+
+          .pack {
+            align-self: flex-end;
+          }
+        }
+
+        img {
+          width: 400px;
+          height: 200px;
+          border-radius: 50%;
+          box-shadow: 0 20px 80px 0 rgba(0, 0, 0, 0.55);
+        }
+
+        .right {
+          // border: 1px solid red;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+
+          .cheat {
+            align-self: flex-start;
+            margin: 0 0 20px 50px;
+          }
+
+          .dex {
+            align-self: flex-start;
+          }
+        }
+      }
+    }
   }
 }
