@@ -178,17 +178,16 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
         `0 0 150px 150px rgba(${handleBoxShadow()}, 1)`,
         `0 0 15px 15px rgba(${handleBoxShadow()}, 0)`,
       ],
-      opacity: [1, 0],
+      opacity: [1, 1, 0],
       transition: { duration: 1.2, delay: 0 },
     },
   };
   const variants = {
     initial: { scale: 1.5, opacity: 0, boxShadow: '0' },
     animate: {
-      scale: [1.2, 1],
+      scale: [1.5, 1],
       opacity: [0, 1],
       transition: { duration: 0.6, delay: 0 },
-      boxShadow: '0',
     },
   };
 
