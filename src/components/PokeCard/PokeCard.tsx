@@ -24,36 +24,50 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProp
     }
   };
 
-  const hoverVariants = {
-    hoverScale: {
-      scale: 1.02,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    hoverShadow: {
-      boxShadow: `0 0 8px 4px rgba(${types[0].type.name === "grass" ? "137, 237, 137" : "255, 255 ,255"}, 0.3)`,
-      transition: {
-        duration: 0.6,
-      },
-    },
-    hoverRotate: {
-      rotate: [0, 0.3, -0.3, 0.3, -0.3, 0.3, -0.3, 0],
-      transition: { delay: 0.3, duration: 0.7, repeat: Infinity, type: "spring" },
-    },
-  };
+  const handleBoxShadow = () => {
+    let pokemonType: string = "";
+    pokemonType = types[0].type.name;
 
-  const renderCardBackSide = () => {
-    return (
-      <Fragment>
-        <motion.div
-          className="hiddenCard"
-          onClick={() => setIsHidden(false)}
-          variants={hoverVariants}
-          whileHover={["hoverScale", "hoverRotate", "hoverShadow"]}
-        ></motion.div>
-      </Fragment>
-    );
+    switch (pokemonType) {
+      case "bug":
+        return "137, 237, 137";
+      case "dark":
+        return "48, 48, 48";
+      case "dragon":
+        return "1, 1, 64";
+      case "electric":
+        return "197, 197, 1";
+      case "fairy":
+        return "253, 193, 203";
+      case "fighting":
+        return "201, 133, 7";
+      case "fire":
+        return "141, 6, 6";
+      case "flying":
+        return "175, 219, 233";
+      case "ghost":
+        return "84, 0, 84";
+      case "grass":
+        return "2, 141, 2";
+      case "ground":
+        return "96, 55, 25";
+      case "ice":
+        return "68, 142, 157";
+      case "normal":
+        return "197, 196, 196";
+      case "poison":
+        return "149, 39, 149";
+      case "psychic":
+        return "249, 176, 187";
+      case "rock":
+        return "74, 71, 71";
+      case "steel":
+        return "39, 155, 143";
+      case "water":
+        return "15, 86, 167";
+      default:
+        return { background: undefined };
+    }
   };
 
   const handleBackgroundColor = (): CSSProperties => {
@@ -100,6 +114,39 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProp
       default:
         return { background: undefined };
     }
+  };
+
+  const hoverVariants = {
+    hoverScale: {
+      scale: 1.02,
+      transition: {
+        duration: 0.2,
+      },
+    },
+    hoverShadow: {
+      boxShadow: `0 0 15px 15px rgba(${handleBoxShadow()}, 0.4)`,
+      transition: {
+        delay: 0.5,
+        duration: 1,
+      },
+    },
+    hoverRotate: {
+      rotate: [0, 0.3, -0.3, 0.3, -0.3, 0.3, -0.3, 0],
+      transition: { delay: 0.2, duration: 0.7, repeat: Infinity, type: "spring" },
+    },
+  };
+
+  const renderCardBackSide = () => {
+    return (
+      <Fragment>
+        <motion.div
+          className="hiddenCard"
+          onClick={() => setIsHidden(false)}
+          variants={hoverVariants}
+          whileHover={["hoverScale", "hoverRotate", "hoverShadow"]}
+        ></motion.div>
+      </Fragment>
+    );
   };
 
   const renderCardFront = () => {

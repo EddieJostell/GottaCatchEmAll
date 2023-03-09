@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from "react";
-
 import { PokeCard } from "./components/PokeCard/PokeCard";
 import { DashBoard } from "./components/DashBoard/DashBoard";
 import "./App.scss";
