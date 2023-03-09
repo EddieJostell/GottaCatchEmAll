@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from "react";
 
-import { PokeCard } from './components/PokeCard/PokeCard';
-import './App.scss';
-import { DashBoard } from './components/DashBoard/DashBoard';
-import { PokeDex } from './components/PokeDex/PokeDex';
+import { PokeCard } from "./components/PokeCard/PokeCard";
+import { DashBoard } from "./components/DashBoard/DashBoard";
+import "./App.scss";
 
 //Game Engine
 function App() {
@@ -12,9 +11,7 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState(
-    'https://pokeapi.co/api/v2/pokemon?limit=200'
-  );
+  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=200");
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
   const [coins, setCoins] = useState<number>(50);
   const [cardArray, setCardArray] = useState<any>([]);
@@ -30,9 +27,7 @@ function App() {
 
     function createPokemonObject(result: any[]) {
       result.forEach(async (pokemon) => {
-        const res = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-        );
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
         const data = await res.json();
         setAllPokemons((currentList: any) => [...currentList, data]);
       });
@@ -50,8 +45,7 @@ function App() {
 
   const buyPack = () => {
     for (let i = 0; i < 5; i++) {
-      const randomCard =
-        allPokemons[Math.floor(Math.random() * allPokemons.length)];
+      const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
       cardArray.push(randomCard);
       setCardArray([...cardArray]);
       setCoins(coins - 25);
@@ -59,8 +53,7 @@ function App() {
   };
 
   const buyOneCard = () => {
-    const randomCard =
-      allPokemons[Math.floor(Math.random() * allPokemons.length)];
+    const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
     cardArray.push(randomCard);
     setCardArray([...cardArray]);
     setCoins(coins - 5);
@@ -69,7 +62,7 @@ function App() {
   const handleReleasePokemon = (index: number) => {
     let randomNr = Math.floor(Math.random() * 100);
     if (randomNr >= 80) {
-      alert('You got coins for releasing Pokemon! Lucky bastard');
+      alert("You got coins for releasing Pokemon! Lucky bastard");
       setCoins(coins + 5);
     }
     setCardArray(cardArray.filter((value: any, i: any) => i !== index));
@@ -78,8 +71,6 @@ function App() {
   const cheatButton = () => {
     setCoins(coins + 100);
   };
-
-  console.log('collected', collectedPokemons);
 
   return (
     <Fragment>
@@ -94,12 +85,12 @@ function App() {
       />
 
       <Fragment>
-        <div className='pokemon-container'>
+        <div className="pokemon-container">
           {cardArray.map((pokemon: any, index: any) => (
             <PokeCard
               key={index}
               id={pokemon.id}
-              sprites={pokemon.sprites.front_default}
+              sprites={pokemon.sprites}
               types={pokemon.types}
               name={pokemon.name}
               addPokemonClick={() => handleCollectPokemon(pokemon, index)}
