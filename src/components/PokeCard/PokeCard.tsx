@@ -22,13 +22,22 @@ export interface IPokeCardProps {
   name: string;
   addPokemonClick: () => any;
   releasePokemonClick: () => any;
+
+  whatever: any;
 }
 
 export const PokeCard: FunctionComponent<IPokeCardProps> = (
   props: IPokeCardProps
 ): JSX.Element => {
-  const { id, sprites, types, name, addPokemonClick, releasePokemonClick } =
-    props;
+  const {
+    id,
+    sprites,
+    types,
+    name,
+    addPokemonClick,
+    releasePokemonClick,
+    whatever,
+  } = props;
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
   const handleTypeArray = (valueType: []) => {
@@ -162,6 +171,9 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
   const handleAnimateClick = () => {
     setVariant('animate');
     setTimeout(() => {
+      if (whatever) {
+        whatever();
+      }
       setIsHidden(false);
     }, 1200);
   };
