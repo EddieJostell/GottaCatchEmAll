@@ -20,14 +20,15 @@ export interface IPokeCardProps {
   sprites: any;
   types: any;
   name: string;
-  addPokemonClick: () => any;
-  releasePokemonClick: () => any;
+  addPokemonClick: any;
+  releasePokemonClick: any;
+  cardClick: () => any;
 }
 
 export const PokeCard: FunctionComponent<IPokeCardProps> = (
   props: IPokeCardProps
 ): JSX.Element => {
-  const { id, sprites, types, name, addPokemonClick, releasePokemonClick } =
+  const { id, sprites, types, name, addPokemonClick, releasePokemonClick, cardClick } =
     props;
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
@@ -138,19 +139,20 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
       scale: 1.02,
       transition: {
         duration: 0.2,
+        delay: 0.2
       },
     },
     hoverShadow: {
-      boxShadow: `0 0 15px 15px rgba(${handleBoxShadow()}, 0.4)`,
+      boxShadow: `0 0 10px 10px rgba(${handleBoxShadow()}, 0.2)`,
       transition: {
-        delay: 0.5,
-        duration: 1,
+        delay: 0.2,
+        duration: 1.5,
       },
     },
     hoverRotate: {
-      rotate: [0, 0.3, -0.3, 0.3, -0.3, 0.3, -0.3, 0],
+      rotate: [0, 0.25, -0.25, 0.25, -0.25, 0.25, -0.25, 0.2],
       transition: {
-        delay: 0.2,
+        delay: 0.1,
         duration: 0.7,
         repeat: Infinity,
         type: 'spring',
@@ -160,6 +162,9 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
 
   const [variant, setVariant] = React.useState('initial');
   const handleAnimateClick = () => {
+    if(cardClick) {
+      cardClick()
+    }
     setVariant('animate');
     setTimeout(() => {
       setIsHidden(false);
@@ -174,9 +179,9 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
     animate: {
       scale: [1, 1.5],
       boxShadow: [
-        `0 0 15px 15px rgba(${handleBoxShadow()}, 0.4)`,
-        `0 0 150px 150px rgba(${handleBoxShadow()}, 1)`,
-        `0 0 15px 15px rgba(${handleBoxShadow()}, 0)`,
+        `0 0 10px 10px rgba(${handleBoxShadow()}, 0.2)`,
+        `0 0 100px 100px rgba(${handleBoxShadow()}, 1)`,
+        `0 0 50px 50px rgba(${handleBoxShadow()}, 0)`,
       ],
       opacity: [1, 1, 0],
       transition: { duration: 1.2, delay: 0 },

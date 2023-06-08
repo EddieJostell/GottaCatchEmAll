@@ -10,10 +10,12 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=200");
+  const [loadPoke, setLoadPoke] = useState(
+    "https://pokeapi.co/api/v2/pokemon?limit=200"
+  );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
-  const [coins, setCoins] = useState<number>(50);
   const [cardArray, setCardArray] = useState<any>([]);
+  const [cardIsVisible, setCardIsVisible] = useState<boolean>(false);
 
   const handleStartGame = () => {
     setStartGame(!startGame);
@@ -26,8 +28,13 @@ function App() {
 
     function createPokemonObject(result: any[]) {
       result.forEach(async (pokemon) => {
-        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
+        const res = await fetch(
+          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
+        );
         const data = await res.json();
+
+        data.cardVisible = false;
+
         setAllPokemons((currentList: any) => [...currentList, data]);
       });
     }
@@ -36,6 +43,16 @@ function App() {
   useEffect(() => {
     getAllPokemons();
   }, []);
+  useEffect(() => {
+    const allCardsShown = cardArray.every(
+      (obj: { cardVisible: boolean }) => obj.cardVisible === true
+    );
+    setCardIsVisible(allCardsShown);
+
+    if (cardArray.length === 0) {
+      setCardIsVisible(false);
+    }
+  }, [cardArray]);
 
   const handleCollectPokemon = (poke: any, index: number) => {
     setCollectedPokemons((currentPokemons: any) => [...currentPokemons, poke]);
@@ -44,40 +61,37 @@ function App() {
 
   const buyPack = () => {
     for (let i = 0; i < 5; i++) {
-      const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
+      const randomCard =
+        allPokemons[Math.floor(Math.random() * allPokemons.length)];
       cardArray.push(randomCard);
       setCardArray([...cardArray]);
-      setCoins(coins - 25);
     }
-  };
-
-  const buyOneCard = () => {
-    const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
-    cardArray.push(randomCard);
-    setCardArray([...cardArray]);
-    setCoins(coins - 5);
   };
 
   const handleReleasePokemon = (index: number) => {
     let randomNr = Math.floor(Math.random() * 100);
     if (randomNr >= 80) {
       alert("You got coins for releasing Pokemon! Lucky bastard");
-      setCoins(coins + 5);
     }
     setCardArray(cardArray.filter((value: any, i: any) => i !== index));
   };
 
-  const cheatButton = () => {
-    setCoins(coins + 100);
+  const cardClick = (pokemon: any) => {
+    const allCardsShown = cardArray.every(
+      (obj: { cardVisible: boolean }) => obj.cardVisible === true
+    );
+    pokemon.cardVisible = true;
+    setCardIsVisible(allCardsShown);
+
+    if (cardArray.length === 0) {
+      setCardIsVisible(false);
+    }
   };
 
   return (
     <Fragment>
       <DashBoard
-        buyOneCard={buyOneCard}
         buyPack={buyPack}
-        coins={coins}
-        cheatButton={cheatButton}
         handleStartGame={handleStartGame}
         startGame={startGame}
         collectedPokemons={collectedPokemons}
@@ -87,13 +101,20 @@ function App() {
         <div className="pokemon-container">
           {cardArray.map((pokemon: any, index: any) => (
             <PokeCard
+              cardClick={() => cardClick(pokemon)}
               key={index}
               id={pokemon.id}
               sprites={pokemon.sprites}
               types={pokemon.types}
               name={pokemon.name}
-              addPokemonClick={() => handleCollectPokemon(pokemon, index)}
-              releasePokemonClick={() => handleReleasePokemon(index)}
+              addPokemonClick={
+                cardIsVisible
+                  ? () => handleCollectPokemon(pokemon, index)
+                  : undefined
+              }
+              releasePokemonClick={
+                cardIsVisible ? () => handleReleasePokemon(index) : undefined
+              }
             />
           ))}
         </div>

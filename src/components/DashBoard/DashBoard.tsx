@@ -5,10 +5,7 @@ import { PokeDex } from '../PokeDex/PokeDex';
 import './Dashboard.scss';
 
 interface IDashboardProps {
-  coins: number;
   startGame: boolean;
-  cheatButton: () => void;
-  buyOneCard: () => void;
   buyPack: () => void;
   handleStartGame: () => void;
   collectedPokemons: [];
@@ -22,10 +19,7 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
   props: IDashboardProps
 ): JSX.Element => {
   const {
-    buyOneCard,
-    coins,
     buyPack,
-    cheatButton,
     handleStartGame,
     startGame,
     collectedPokemons,
@@ -53,24 +47,15 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
           <h1 className='title'>TIME TO CATCH EM ALL!</h1>
           <div className='controls'>
             <div className='top'>
-              <h3>Coins Collected: {coins}</h3>
               <h3 className='time'>{currentTime.time}</h3>
             </div>
             <div className='bottom'>
               <div className='left'>
                 <Button
-                  className='one'
-                  disabled={coins < 5}
-                  onClick={buyOneCard}
-                >
-                  Buy one card: COST 5 COINS
-                </Button>
-                <Button
                   className='pack'
-                  disabled={coins < 25}
                   onClick={buyPack}
                 >
-                  Buy Pack (5): COST 25 COINS
+                  Buy Pack
                 </Button>
               </div>
 
@@ -80,9 +65,6 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
               />
 
               <div className='right'>
-                <Button className='cheat' onClick={cheatButton}>
-                  CHEAT BUTTON! GET 100 COINS
-                </Button>
                 <div className='dex'>
                   <PokeDex collectedPokemons={collectedPokemons} />
                 </div>
