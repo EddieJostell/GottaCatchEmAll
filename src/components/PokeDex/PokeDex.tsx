@@ -6,7 +6,9 @@ export interface IPokeDexProps {
   collectedPokemons: [];
 }
 
-export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps): JSX.Element => {
+export const PokeDex: FunctionComponent<IPokeDexProps> = (
+  props: IPokeDexProps
+): JSX.Element => {
   const { collectedPokemons } = props;
 
   const [modal, setModal] = useState<boolean>(false);
@@ -33,7 +35,11 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
     const sortedPokemonArray = collectedPokemons
       .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
       .map((pokemon: any, index: any) => (
-        <div className="col-2 collectedPokemonContainer" key={index} onClick={() => toggleNested(pokemon)}>
+        <div
+          className="col-2 collectedPokemonContainer"
+          key={index}
+          onClick={() => toggleNested(pokemon)}
+        >
           <img alt={pokemon.name} src={pokemon.sprites.front_default} />
           <p>{pokemon.name.toLocaleUpperCase()}</p>
           <p>{pokemon.id}</p>
@@ -60,7 +66,10 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
                   <Fragment>
                     <ModalHeader>{storedPokemon.name}</ModalHeader>
                     <ModalBody>
-                      <img src={storedPokemon.sprites.front_default} />
+                      <img
+                        alt={storedPokemon.name}
+                        src={storedPokemon.sprites.front_default}
+                      />
                     </ModalBody>
                   </Fragment>
                 )}
