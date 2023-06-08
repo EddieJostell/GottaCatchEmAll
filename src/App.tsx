@@ -68,19 +68,11 @@ function App() {
     }
   };
 
-  const handleReleasePokemon = (index: number) => {
-    let randomNr = Math.floor(Math.random() * 100);
-    if (randomNr >= 80) {
-      alert("You got coins for releasing Pokemon! Lucky bastard");
-    }
-    setCardArray(cardArray.filter((value: any, i: any) => i !== index));
-  };
-
   const cardClick = (pokemon: any) => {
+    pokemon.cardVisible = true;
     const allCardsShown = cardArray.every(
       (obj: { cardVisible: boolean }) => obj.cardVisible === true
     );
-    pokemon.cardVisible = true;
     setCardIsVisible(allCardsShown);
 
     if (cardArray.length === 0) {
@@ -112,9 +104,7 @@ function App() {
                   ? () => handleCollectPokemon(pokemon, index)
                   : undefined
               }
-              releasePokemonClick={
-                cardIsVisible ? () => handleReleasePokemon(index) : undefined
-              }
+              cardIsVisible={cardIsVisible}
             />
           ))}
         </div>
