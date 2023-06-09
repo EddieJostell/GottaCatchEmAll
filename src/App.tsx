@@ -54,6 +54,26 @@ function App() {
     }
   }, [cardArray]);
 
+  const hasSameId = (arr: any[]) => {
+    const ids = new Set(arr.map((obj) => obj.id));
+
+    return ids.size !== arr.length;
+  };
+
+  useEffect(() => {
+    const containSameId = hasSameId(collectedPokemons);
+    if (containSameId) {
+      const seen = new Set();
+      setCollectedPokemons(
+        collectedPokemons.filter((item: any) => {
+          const duplicate = seen.has(item.id);
+          seen.add(item.id);
+          return !duplicate;
+        })
+      );
+    }
+  }, [collectedPokemons]);
+
   const handleCollectPokemon = (poke: any, index: number) => {
     setCollectedPokemons((currentPokemons: any) => [...currentPokemons, poke]);
     setCardArray(cardArray.filter((value: any, i: any) => i !== index));
