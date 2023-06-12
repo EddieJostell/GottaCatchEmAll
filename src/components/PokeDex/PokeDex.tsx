@@ -1,9 +1,14 @@
-import React, { Fragment, FunctionComponent, useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import React, {
+  CSSProperties,
+  Fragment,
+  FunctionComponent,
+  useState,
+} from "react";
+import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
 import "./pokeDex.scss";
 
 export interface IPokeDexProps {
-  collectedPokemons: [];
+  collectedPokemons: any;
 }
 
 export const PokeDex: FunctionComponent<IPokeDexProps> = (
@@ -26,9 +31,51 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
     setNestedModal(!nestedModal);
     setCloseAll(false);
   };
-  const toggleAll = () => {
-    setNestedModal(!nestedModal);
-    setCloseAll(true);
+
+  const handleBackgroundColor = (): CSSProperties => {
+    let pokemonType: string = "";
+    pokemonType = storedPokemon.types[0].type.name;
+
+    switch (pokemonType) {
+      case "bug":
+        return { backgroundColor: "#89ed89" };
+      case "dark":
+        return { backgroundColor: "#303030" };
+      case "dragon":
+        return { backgroundColor: "#010140" };
+      case "electric":
+        return { backgroundColor: "#c5c501" };
+      case "fairy":
+        return { backgroundColor: "#fdc1cb" };
+      case "fighting":
+        return { backgroundColor: "#c98507" };
+      case "fire":
+        return { backgroundColor: "#8d0606" };
+      case "flying":
+        return { backgroundColor: "#afdbe9" };
+      case "ghost":
+        return { backgroundColor: "#540054" };
+      case "grass":
+        return { backgroundColor: "#028d02" };
+      case "ground":
+        return { backgroundColor: "#603719" };
+      case "ice":
+        return { backgroundColor: "#448e9d" };
+      case "normal":
+        return { backgroundColor: "#c5c4c4" };
+      case "poison":
+        return { backgroundColor: "#952795" };
+      case "psychic":
+        return { backgroundColor: "#f9b0bb" };
+      case "rock":
+        return { backgroundColor: "#4a4747" };
+      case "steel":
+        return { backgroundColor: "#279b8f" };
+      case "water":
+        return { backgroundColor: "#0f56a7" };
+      default:
+        return { background: undefined };
+    }
   };
 
   const renderModal = (): JSX.Element => {
@@ -63,24 +110,38 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                 fade={false}
               >
                 {storedPokemon && (
-                  <Fragment>
-                    <ModalHeader>{storedPokemon.name}</ModalHeader>
+                  <div className="nestedModal">
+                    <div>
+                      <ModalHeader style={handleBackgroundColor()}>
+                        {storedPokemon.name.toUpperCase()} #{storedPokemon.id}
+                        <br />
+                        {storedPokemon.types[0].type.name}
+                        &nbsp;
+                        {storedPokemon.types[1]?.type.name
+                          ? storedPokemon.types[1].type.name
+                          : null}
+                      </ModalHeader>
+                    </div>
                     <ModalBody>
                       <img
                         alt={storedPokemon.name}
                         src={storedPokemon.sprites.front_default}
                       />
+                      <div className="btns"><span>About</span> <span>Base Stats</span> <span>Shiny</span> <span>Moves</span></div>
+                      <p>Height: {storedPokemon.height}</p>
+                      <p>Weight: {storedPokemon.weight}</p>
+                      <p>Height: {storedPokemon.height}</p>
+                      <p>Weight: {storedPokemon.weight}</p>
+                      <p>Height: {storedPokemon.height}</p>
+                      <p>Weight: {storedPokemon.weight}</p>
                     </ModalBody>
-                  </Fragment>
+                  </div>
                 )}
-                <ModalFooter>
+                {/*                 <ModalFooter className="modalFooter">
                   <Button color="primary" onClick={toggleNested}>
-                    Go back to PokeDex
+                    Back
                   </Button>
-                  <Button color="secondary" onClick={toggleAll}>
-                    Go to Dashboard
-                  </Button>
-                </ModalFooter>
+                </ModalFooter> */}
               </Modal>
             </ModalBody>
           </ModalBody>

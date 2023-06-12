@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { Button } from 'reactstrap';
 import { IntroScreen } from '../IntroScreen/IntoScreen';
 import { PokeDex } from '../PokeDex/PokeDex';
@@ -11,10 +11,6 @@ interface IDashboardProps {
   collectedPokemons: [];
 }
 
-interface IClockState {
-  time: string;
-}
-
 export const DashBoard: FunctionComponent<IDashboardProps> = (
   props: IDashboardProps
 ): JSX.Element => {
@@ -25,19 +21,6 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
     collectedPokemons,
   } = props;
 
-  const [currentTime, setCurrentTime] = useState<IClockState>({ time: '' });
-
-  useEffect(() => {
-    let timeArray = new Date().toLocaleString().split(' ');
-    let time = timeArray[1];
-    let timer = setInterval(() => {
-      setCurrentTime({ ...currentTime, time: time });
-    }, 1000);
-    return () => {
-      clearInterval(timer);
-    };
-  });
-
   return (
     <div className='Dashboard'>
       {startGame ? (
@@ -46,9 +29,6 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
         <div className='Dashboard-container'>
           <h1 className='title'>TIME TO CATCH EM ALL!</h1>
           <div className='controls'>
-            <div className='top'>
-              <h3 className='time'>{currentTime.time}</h3>
-            </div>
             <div className='bottom'>
               <div className='left'>
                 <Button

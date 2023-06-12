@@ -5,3 +5,15 @@
     cursor: pointer;
   }
 }
+
+.nestedModal {
+  .modal-title {
+    color: #fff;
+  }
+
+  .btns {
+    display: flex;
+    justify-content: space-between;
+    font-size: 22px;
+  }
+}
