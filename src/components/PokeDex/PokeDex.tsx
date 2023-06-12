@@ -97,7 +97,9 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
       <Fragment>
         <Button onClick={toggle}>Go To PokeDex</Button>
         <Modal isOpen={modal} toggle={toggle} size="lg" scrollable fade={false}>
-          <ModalHeader toggle={toggle}>PokeDex</ModalHeader>
+          <ModalHeader toggle={toggle}>
+            PokeDex | Collected {collectedPokemons.length} / 1281
+          </ModalHeader>
           <ModalBody>
             <div className="row">{sortedPokemonArray}</div>
             <ModalBody>
@@ -127,7 +129,10 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                         alt={storedPokemon.name}
                         src={storedPokemon.sprites.front_default}
                       />
-                      <div className="btns"><span>About</span> <span>Base Stats</span> <span>Shiny</span> <span>Moves</span></div>
+                      <div className="btns">
+                        <span>About</span> <span>Base Stats</span>
+                        <span>Shiny</span> <span>Moves</span>
+                      </div>
                       <p>Height: {storedPokemon.height}</p>
                       <p>Weight: {storedPokemon.weight}</p>
                       <p>Height: {storedPokemon.height}</p>
