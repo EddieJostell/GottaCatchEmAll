@@ -137,11 +137,6 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                     </ModalBody>
                   </div>
                 )}
-                {/*                 <ModalFooter className="modalFooter">
-                  <Button color="primary" onClick={toggleNested}>
-                    Back
-                  </Button>
-                </ModalFooter> */}
               </Modal>
             </ModalBody>
           </ModalBody>
