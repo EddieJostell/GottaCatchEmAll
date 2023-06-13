@@ -1,0 +1,34 @@
+.battle-log {
+  position: relative;
+  margin-top: 80px;
+  width: 100vh;
+  height: 50vh;
+  text-align: center;
+  background-color: #3b3b3b;
+  border-radius: 12px;
+
+  .text {
+    color: #fff;
+    font-size: 20px;
+    margin: 6px;
+  }
+
+  .myPokemon {
+    position: absolute;
+
+    p {
+      color: #fff;
+      text-transform: capitalize;
+    }
+  }
+  .wildPokemon {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    p {
+      color: #fff;
+      text-transform: capitalize;
+    }
+  }
+}

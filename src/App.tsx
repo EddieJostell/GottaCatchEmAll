@@ -11,14 +11,19 @@ function App() {
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
   const [loadPoke, setLoadPoke] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=10"
+    "https://pokeapi.co/api/v2/pokemon?limit=200"
   );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
   const [cardArray, setCardArray] = useState<any>([]);
   const [cardIsVisible, setCardIsVisible] = useState<boolean>(false);
+  const [coins, setCoins] = useState<number>(100);
 
   const handleStartGame = () => {
+    const randomCard =
+      allPokemons[Math.floor(Math.random() * allPokemons.length)];
     setStartGame(!startGame);
+    cardArray.push(randomCard);
+    setCardArray([...cardArray]);
   };
 
   const getAllPokemons = async () => {
@@ -34,6 +39,8 @@ function App() {
         const data = await res.json();
 
         data.cardVisible = false;
+        data.hp = 10;
+        data.attack = 2;
 
         setAllPokemons((currentList: any) => [...currentList, data]);
       });
@@ -68,11 +75,14 @@ function App() {
   };
 
   const buyPack = () => {
-    for (let i = 0; i < 5; i++) {
-      const randomCard =
-        allPokemons[Math.floor(Math.random() * allPokemons.length)];
-      cardArray.push(randomCard);
-      setCardArray([...cardArray]);
+    if (coins >= 5) {
+      for (let i = 0; i < 5; i++) {
+        const randomCard =
+          allPokemons[Math.floor(Math.random() * allPokemons.length)];
+        cardArray.push(randomCard);
+        setCardArray([...cardArray]);
+      }
+      setCoins(coins - 5);
     }
   };
 
@@ -88,13 +98,20 @@ function App() {
     }
   };
 
+  const updateStateInAutoBattle = (newValue: number) => {
+    setCoins(newValue);
+  };
+
   return (
     <Fragment>
       <DashBoard
+        updateCoins={updateStateInAutoBattle}
         buyPack={buyPack}
         handleStartGame={handleStartGame}
         startGame={startGame}
         collectedPokemons={collectedPokemons}
+        coins={coins}
+        allPokemons={allPokemons}
       />
 
       <Fragment>
