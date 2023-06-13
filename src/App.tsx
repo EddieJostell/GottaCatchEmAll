@@ -11,7 +11,7 @@ function App() {
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
   const [loadPoke, setLoadPoke] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=200"
+    "https://pokeapi.co/api/v2/pokemon?limit=20"
   );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
   const [cardArray, setCardArray] = useState<any>([]);
@@ -50,6 +50,7 @@ function App() {
   useEffect(() => {
     getAllPokemons();
   }, []);
+
   useEffect(() => {
     const allCardsShown = cardArray.every(
       (obj: { cardVisible: boolean }) => obj.cardVisible === true
@@ -62,10 +63,16 @@ function App() {
   }, [cardArray]);
 
   const handleCollectPokemon = (poke: any, index: number) => {
-    const isDuplicate = collectedPokemons.find((x: any) => {
-      return x.id === poke.id;
-    });
-    if (!isDuplicate) {
+    const indexOfPokemon = collectedPokemons.findIndex(
+      (item: any) => item.id === poke.id
+    );
+
+    if (indexOfPokemon !== -1) {
+      collectedPokemons[indexOfPokemon].collected += 1;
+      const updatedPokemons = Array.from(collectedPokemons);
+      setCollectedPokemons(updatedPokemons);
+    } else {
+      poke.collected = 1;
       setCollectedPokemons((currentPokemons: any) => [
         ...currentPokemons,
         poke,

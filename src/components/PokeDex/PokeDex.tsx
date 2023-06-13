@@ -83,10 +83,13 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
       .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
       .map((pokemon: any, index: any) => (
         <div
-          className="col-2 collectedPokemonContainer"
+          className="col-2 CollectedPokemonContainer"
           key={index}
           onClick={() => toggleNested(pokemon)}
         >
+          <span className="amount">
+            {pokemon.collected > 1 && "x" + pokemon.collected}
+          </span>
           <img alt={pokemon.name} src={pokemon.sprites.front_default} />
           <p>{pokemon.name.toLocaleUpperCase()}</p>
           <p>{pokemon.id}</p>

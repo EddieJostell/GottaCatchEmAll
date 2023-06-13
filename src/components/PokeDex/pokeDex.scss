@@ -1,8 +1,15 @@
-.collectedPokemonContainer {
+.CollectedPokemonContainer {
   text-align: center;
+  position: relative;
 
   &:hover {
     cursor: pointer;
+  }
+
+  .amount {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 
