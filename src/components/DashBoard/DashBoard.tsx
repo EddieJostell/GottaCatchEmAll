@@ -4,15 +4,14 @@ import { IntroScreen } from "../IntroScreen/IntoScreen";
 import { PokeDex } from "../PokeDex/PokeDex";
 import "./Dashboard.scss";
 import { AutoBattle } from "../AutoBattle/AutoBattle";
+import { usePokemonContext } from "../PokemonContext/PokemonContext";
 
 interface IDashboardProps {
   startGame: boolean;
   buyPack: () => void;
   handleStartGame: () => void;
   collectedPokemons: [];
-  coins: number;
   allPokemons: any;
-  updateCoins: any;
 }
 
 export const DashBoard: FunctionComponent<IDashboardProps> = (
@@ -23,10 +22,10 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
     handleStartGame,
     startGame,
     collectedPokemons,
-    coins,
     allPokemons,
-    updateCoins,
   } = props;
+
+  const { pokemonContext } = usePokemonContext();
 
   return (
     <div className="Dashboard">
@@ -54,10 +53,8 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
                 </div>
               </div>
             </div>
-            <h2>Coins: {coins}</h2>
+            <h2>Coins: {pokemonContext.coins}</h2>
             <AutoBattle
-              coins={coins}
-              updateCoins={updateCoins}
               allPokemons={allPokemons}
               collectedPokemons={collectedPokemons}
             />

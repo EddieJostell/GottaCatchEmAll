@@ -1,12 +1,11 @@
 import React, { Fragment, FunctionComponent, useState } from "react";
+import { usePokemonContext } from "../PokemonContext/PokemonContext";
 import { Button } from "reactstrap";
 import "./autoBattle.scss";
 
 export interface IAutoBattle {
   collectedPokemons: any;
   allPokemons: any;
-  updateCoins: any;
-  coins: any;
 }
 
 interface MyPokemon {
@@ -23,7 +22,7 @@ interface WildPokemon {
 export const AutoBattle: FunctionComponent<IAutoBattle> = (
   props: IAutoBattle
 ): JSX.Element => {
-  const { allPokemons, collectedPokemons, updateCoins, coins } = props;
+  const { allPokemons, collectedPokemons } = props;
   const [battleLog, setBattleLog] = useState<string[]>([]);
   const [fightIsActive, setFightIsActive] = useState<boolean>(false);
   const [endBattle, setEndBattle] = useState<boolean>(false);
@@ -37,6 +36,8 @@ export const AutoBattle: FunctionComponent<IAutoBattle> = (
     wildName: "",
     wildHealth: 0,
   });
+
+  const { pokemonContext, setPokemonContext } = usePokemonContext();
 
   const handleStartFight = () => {
     setFightIsActive(true);
@@ -91,7 +92,12 @@ export const AutoBattle: FunctionComponent<IAutoBattle> = (
         newBattleLog.push(
           `${myRandomPokemon.name} defeats ${wildRandomPokemon.name}, you recieved 5 coins`
         );
-        updateCoins(coins + 5);
+
+        setPokemonContext({
+          ...pokemonContext,
+          coins: pokemonContext.coins + 5,
+        });
+
         setBattleLog([...newBattleLog]);
         setEndBattle(true);
 

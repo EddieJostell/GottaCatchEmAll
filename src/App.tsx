@@ -2,21 +2,24 @@ import React, { Fragment, useEffect, useState } from "react";
 import { PokeCard } from "./components/PokeCard/PokeCard";
 import { DashBoard } from "./components/DashBoard/DashBoard";
 import "./App.scss";
+import { usePokemonContext } from "./components/PokemonContext/PokemonContext";
 
 //Game Engine
 function App() {
+  //Context
+  const { pokemonContext, setPokemonContext } = usePokemonContext();
+
   //Start Game State
   const [startGame, setStartGame] = useState<boolean>(true);
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
   const [loadPoke, setLoadPoke] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=20"
+    "https://pokeapi.co/api/v2/pokemon?limit=5"
   );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
   const [cardArray, setCardArray] = useState<any>([]);
   const [cardIsVisible, setCardIsVisible] = useState<boolean>(false);
-  const [coins, setCoins] = useState<number>(100);
 
   const handleStartGame = () => {
     const randomCard =
@@ -50,7 +53,6 @@ function App() {
   useEffect(() => {
     getAllPokemons();
   }, []);
-
   useEffect(() => {
     const allCardsShown = cardArray.every(
       (obj: { cardVisible: boolean }) => obj.cardVisible === true
@@ -82,14 +84,14 @@ function App() {
   };
 
   const buyPack = () => {
-    if (coins >= 5) {
+    if (pokemonContext.coins >= 5) {
       for (let i = 0; i < 5; i++) {
         const randomCard =
           allPokemons[Math.floor(Math.random() * allPokemons.length)];
         cardArray.push(randomCard);
         setCardArray([...cardArray]);
       }
-      setCoins(coins - 5);
+      setPokemonContext({ ...pokemonContext, coins: pokemonContext.coins - 5 });
     }
   };
 
@@ -105,19 +107,13 @@ function App() {
     }
   };
 
-  const updateStateInAutoBattle = (newValue: number) => {
-    setCoins(newValue);
-  };
-
   return (
     <Fragment>
       <DashBoard
-        updateCoins={updateStateInAutoBattle}
         buyPack={buyPack}
         handleStartGame={handleStartGame}
         startGame={startGame}
         collectedPokemons={collectedPokemons}
-        coins={coins}
         allPokemons={allPokemons}
       />
 
