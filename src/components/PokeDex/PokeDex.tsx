@@ -98,7 +98,9 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
 
     return (
       <Fragment>
-        <Button onClick={toggle}>Go To PokeDex</Button>
+        <Button className="dex-btn" onClick={toggle}>
+          Go To PokeDex
+        </Button>
         <Modal isOpen={modal} toggle={toggle} size="lg" scrollable fade={false}>
           <ModalHeader toggle={toggle}>
             PokeDex | Collected {collectedPokemons.length} / 1281

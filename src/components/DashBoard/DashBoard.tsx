@@ -5,6 +5,8 @@ import { PokeDex } from "../PokeDex/PokeDex";
 import "./Dashboard.scss";
 import { AutoBattle } from "../AutoBattle/AutoBattle";
 import { usePokemonContext } from "../PokemonContext/PokemonContext";
+import pokemonLogo from "../../utils/International_Pokémon_logo.svg.png";
+import { PokeCard } from "../PokeCard/PokeCard";
 
 interface IDashboardProps {
   startGame: boolean;
@@ -12,6 +14,10 @@ interface IDashboardProps {
   handleStartGame: () => void;
   collectedPokemons: [];
   allPokemons: any;
+  cardClick: (pokemon: any) => void;
+  handleCollectPokemon: (pokemon: any, index: number) => void;
+  cardIsVisible: boolean;
+  cardArray: [];
 }
 
 export const DashBoard: FunctionComponent<IDashboardProps> = (
@@ -23,44 +29,60 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
     startGame,
     collectedPokemons,
     allPokemons,
+    cardIsVisible,
+    handleCollectPokemon,
+    cardClick,
+    cardArray,
   } = props;
 
   const { pokemonContext } = usePokemonContext();
 
   return (
     <div className="Dashboard">
-      {startGame ? (
-        <IntroScreen handleStartGame={handleStartGame} />
-      ) : (
-        <div className="Dashboard-container">
-          <h1 className="title">TIME TO CATCH EM ALL!</h1>
-          <div className="controls">
-            <div className="bottom">
-              <div className="left">
-                <Button className="pack" onClick={buyPack}>
-                  Buy Pack, 5 Coins
-                </Button>
-              </div>
-
-              <img
-                alt="charizard"
-                src={process.env.PUBLIC_URL + "charizard.jpg"}
-              />
-
-              <div className="right">
-                <div className="dex">
+      <div className="Dashboard-container">
+        {startGame ? (
+          <IntroScreen handleStartGame={handleStartGame} />
+        ) : (
+          <>
+            <div className="top">
+              <div className="controls">
+                <img className="pokemon-logo" alt="logo" src={pokemonLogo} />
+                <div className="btns">
+                  <Button className="pack" onClick={buyPack}>
+                    Buy Pack, 5 Coins
+                  </Button>
                   <PokeDex collectedPokemons={collectedPokemons} />
+                  <h2>Coins: {pokemonContext.coins}</h2>
                 </div>
               </div>
+              <div className="pokemon-container">
+                {cardArray.map((pokemon: any, index: any) => (
+                  <PokeCard
+                    cardClick={() => cardClick(pokemon)}
+                    key={index}
+                    id={pokemon.id}
+                    sprites={pokemon.sprites}
+                    types={pokemon.types}
+                    name={pokemon.name}
+                    addPokemonClick={
+                      cardIsVisible
+                        ? () => handleCollectPokemon(pokemon, index)
+                        : undefined
+                    }
+                    cardIsVisible={cardIsVisible}
+                  />
+                ))}
+              </div>
             </div>
-            <h2>Coins: {pokemonContext.coins}</h2>
-            <AutoBattle
-              allPokemons={allPokemons}
-              collectedPokemons={collectedPokemons}
-            />
-          </div>
-        </div>
-      )}
+            <div className="bot">
+              <AutoBattle
+                allPokemons={allPokemons}
+                collectedPokemons={collectedPokemons}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

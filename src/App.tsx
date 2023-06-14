@@ -108,36 +108,19 @@ function App() {
   };
 
   return (
-    <Fragment>
+    <>
       <DashBoard
         buyPack={buyPack}
         handleStartGame={handleStartGame}
         startGame={startGame}
         collectedPokemons={collectedPokemons}
         allPokemons={allPokemons}
+        cardClick={cardClick}
+        cardIsVisible={cardIsVisible}
+        cardArray={cardArray}
+        handleCollectPokemon={handleCollectPokemon}
       />
-
-      <Fragment>
-        <div className="pokemon-container">
-          {cardArray.map((pokemon: any, index: any) => (
-            <PokeCard
-              cardClick={() => cardClick(pokemon)}
-              key={index}
-              id={pokemon.id}
-              sprites={pokemon.sprites}
-              types={pokemon.types}
-              name={pokemon.name}
-              addPokemonClick={
-                cardIsVisible
-                  ? () => handleCollectPokemon(pokemon, index)
-                  : undefined
-              }
-              cardIsVisible={cardIsVisible}
-            />
-          ))}
-        </div>
-      </Fragment>
-    </Fragment>
+    </>
   );
 }
 
