@@ -1,25 +1,19 @@
-import React, {
-  CSSProperties,
-  Fragment,
-  FunctionComponent,
-  useState,
-} from "react";
-import { Button, Modal, ModalHeader, ModalBody } from "reactstrap";
+import React, { CSSProperties, Fragment, FunctionComponent, useState } from "react";
+import { Button, Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 import "./pokeDex.scss";
 
 export interface IPokeDexProps {
   collectedPokemons: any;
 }
 
-export const PokeDex: FunctionComponent<IPokeDexProps> = (
-  props: IPokeDexProps
-): JSX.Element => {
+export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps): JSX.Element => {
   const { collectedPokemons } = props;
 
   const [modal, setModal] = useState<boolean>(false);
   const [nestedModal, setNestedModal] = useState<boolean>(false);
   const [closeAll, setCloseAll] = useState<boolean>(false);
   const [storedPokemon, setStoredPokemon] = useState<any>();
+  const [viewStat, setViewStat] = useState<"About" | "Stats" | "Sprites" | "Moves">("About");
 
   const toggle = () => {
     setModal(!modal);
@@ -82,19 +76,24 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
     const sortedPokemonArray = collectedPokemons
       .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
       .map((pokemon: any, index: any) => (
-        <div
-          className="col-2 CollectedPokemonContainer"
-          key={index}
-          onClick={() => toggleNested(pokemon)}
-        >
-          <span className="amount">
-            {pokemon.collected > 1 && "x" + pokemon.collected}
-          </span>
+        <div className="col-2 CollectedPokemonContainer" key={index} onClick={() => toggleNested(pokemon)}>
+          <span className="amount">{pokemon.collected > 1 && "x" + pokemon.collected}</span>
           <img alt={pokemon.name} src={pokemon.sprites.front_default} />
           <p>{pokemon.name.toLocaleUpperCase()}</p>
           <p>{pokemon.id}</p>
         </div>
       ));
+
+    const pokemonKiloConverter = (weight: number) => {
+      let formattedWeight;
+      if (weight >= 100) {
+        return (formattedWeight = Math.floor(weight / 10));
+      } else {
+        const firstDigit = Math.floor(weight / 10);
+        const secondDigit = weight % 10;
+        return (formattedWeight = `${firstDigit}.${secondDigit}`);
+      }
+    };
 
     return (
       <Fragment>
@@ -102,9 +101,7 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
           Go To PokeDex
         </Button>
         <Modal isOpen={modal} toggle={toggle} size="lg" scrollable fade={false}>
-          <ModalHeader toggle={toggle}>
-            PokeDex | Collected {collectedPokemons.length} / 1281
-          </ModalHeader>
+          <ModalHeader toggle={toggle}>PokeDex | Collected {collectedPokemons.length} / 1281</ModalHeader>
           <ModalBody>
             <div className="row">{sortedPokemonArray}</div>
             <ModalBody>
@@ -124,34 +121,103 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                         <br />
                         {storedPokemon.types[0].type.name}
                         &nbsp;
-                        {storedPokemon.types[1]?.type.name
-                          ? storedPokemon.types[1].type.name
-                          : null}
+                        {storedPokemon.types[1]?.type.name ? storedPokemon.types[1].type.name : null}
                       </ModalHeader>
                     </div>
-                    <ModalBody>
-                      <img
-                        alt={storedPokemon.name}
-                        src={storedPokemon.sprites.front_default}
-                      />
-                      <div className="btns">
-                        <span>About</span> <span>Base Stats</span>
-                        <span>Shiny</span> <span>Moves</span>
-                      </div>
-                      <p>Height: {storedPokemon.height}</p>
-                      <p>Weight: {storedPokemon.weight}</p>
-                      <p>Height: {storedPokemon.height}</p>
-                      <p>Weight: {storedPokemon.weight}</p>
-                      <p>Height: {storedPokemon.height}</p>
-                      <p>Weight: {storedPokemon.weight}</p>
+                    <ModalBody className="nestedModal-body">
+                      <img alt={storedPokemon.name} src={storedPokemon.sprites.front_default} />
+                      <Row className="nestedModal-header-row">
+                        <Col>
+                          <h4 className={`${viewStat === "About" && "active"}`} onClick={() => setViewStat("About")}>
+                            About
+                          </h4>
+                        </Col>
+                        <Col>
+                          <h4 className={`${viewStat === "Stats" && "active"}`} onClick={() => setViewStat("Stats")}>
+                            Stats
+                          </h4>
+                        </Col>
+                        <Col>
+                          <h4
+                            className={`${viewStat === "Sprites" && "active"}`}
+                            onClick={() => setViewStat("Sprites")}
+                          >
+                            Sprites
+                          </h4>
+                        </Col>
+                        <Col>
+                          <h4 className={`${viewStat === "Moves" && "active"}`} onClick={() => setViewStat("Moves")}>
+                            Moves
+                          </h4>
+                        </Col>
+                      </Row>
+                      <Row className="nestedModal-content-row">
+                        {viewStat === "About" && (
+                          <Row>
+                            <Col xs="12" className="box-col">
+                              <Row>
+                                <Col>Height:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.height}0 (cm)</Col>
+                              </Row>
+                              <Row>
+                                <Col>Weight:</Col>
+                                <Col className="stat-about-answer">
+                                  {pokemonKiloConverter(storedPokemon.weight)} (kg)
+                                </Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        )}
+                        {viewStat === "Stats" && (
+                          <Row>
+                            <Col xs="12" className="box-col">
+                              <Row>
+                                <Col>{storedPokemon.stats[0].stat.name}:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.stats[0].base_stat}</Col>
+                              </Row>
+                              <Row>
+                                <Col>{storedPokemon.stats[1].stat.name}:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.stats[1].base_stat}</Col>
+                              </Row>
+                              <Row>
+                                <Col>{storedPokemon.stats[2].stat.name}:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.stats[2].base_stat}</Col>
+                              </Row>
+                              <Row>
+                                <Col>{storedPokemon.stats[3].stat.name}:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.stats[3].base_stat}</Col>
+                              </Row>
+                              <Row>
+                                <Col>{storedPokemon.stats[4].stat.name}:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.stats[4].base_stat}</Col>
+                              </Row>
+                              <Row>
+                                <Col>{storedPokemon.stats[5].stat.name}:</Col>
+                                <Col className="stat-about-answer">{storedPokemon.stats[5].base_stat}</Col>
+                              </Row>
+                            </Col>
+                          </Row>
+                        )}
+                        {viewStat === "Sprites" && (
+                          <Row>
+                            <Col xs="12" className="box-col">
+                              <img alt={storedPokemon.name} src={storedPokemon.sprites.front_default} />
+                              <img alt={storedPokemon.name} src={storedPokemon.sprites.front_shiny} />
+                              <img alt={storedPokemon.name} src={storedPokemon.sprites.back_default} />
+                              <img alt={storedPokemon.name} src={storedPokemon.sprites.back_shiny} />
+                            </Col>
+                          </Row>
+                        )}
+
+                        {viewStat === "Moves" && (
+                          <Col>
+                            <p>test</p>
+                          </Col>
+                        )}
+                      </Row>
                     </ModalBody>
                   </div>
                 )}
-                {/*                 <ModalFooter className="modalFooter">
-                  <Button color="primary" onClick={toggleNested}>
-                    Back
-                  </Button>
-                </ModalFooter> */}
               </Modal>
             </ModalBody>
           </ModalBody>

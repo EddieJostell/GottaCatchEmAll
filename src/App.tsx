@@ -15,7 +15,7 @@ function App() {
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
   const [loadPoke, setLoadPoke] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=5"
+    "https://pokeapi.co/api/v2/pokemon?limit=200"
   );
   const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
   const [cardArray, setCardArray] = useState<any>([]);
