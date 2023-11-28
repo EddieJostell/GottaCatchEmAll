@@ -3,7 +3,6 @@ import { Button } from "reactstrap";
 import { IntroScreen } from "../IntroScreen/IntoScreen";
 import { PokeDex } from "../PokeDex/PokeDex";
 import "./Dashboard.scss";
-import { AutoBattle } from "../AutoBattle/AutoBattle";
 import { usePokemonContext } from "../PokemonContext/PokemonContext";
 import pokemonLogo from "../../utils/International_Pokémon_logo.svg.png";
 import { PokeCard } from "../PokeCard/PokeCard";
@@ -28,7 +27,6 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
     handleStartGame,
     startGame,
     collectedPokemons,
-    allPokemons,
     cardIsVisible,
     handleCollectPokemon,
     cardClick,
@@ -74,12 +72,7 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
                 ))}
               </div>
             </div>
-            <div className="bot">
-              <AutoBattle
-                allPokemons={allPokemons}
-                collectedPokemons={collectedPokemons}
-              />
-            </div>
+            <div className="bot"></div>
           </>
         )}
       </div>
