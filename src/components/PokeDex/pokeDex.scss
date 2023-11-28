@@ -13,14 +13,38 @@
   }
 }
 
+//Nested Modal, if you click on a pokemon in pokedex. This will render.
 .nestedModal {
   .modal-title {
     color: #fff;
   }
 
-  .btns {
-    display: flex;
-    justify-content: space-between;
+  //HeaderRow
+  &-header-row {
+    border-bottom: 4px solid gainsboro;
+    .active {
+      opacity: 100%;
+    }
+    h4 {
+      cursor: pointer;
+      opacity: 50%;
+    }
+  }
+
+  //ContentRow
+  &-content-row {
     font-size: 22px;
+    .box-col {
+      margin: 8px 0;
+    }
+  }
+
+  //Modalbody
+  &-body {
+    min-height: 600px;
+
+    .stat-about-answer {
+      font-weight: 700;
+    }
   }
 }
