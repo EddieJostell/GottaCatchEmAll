@@ -4,7 +4,7 @@ import { IntroScreen } from "../IntroScreen/IntoScreen";
 import { PokeDex } from "../PokeDex/PokeDex";
 import "./Dashboard.scss";
 import { usePokemonContext } from "../PokemonContext/PokemonContext";
-import pokemonLogo from "../../utils/International_Pokémon_logo.svg.png";
+import pokemonLogo from "../../utils/cyndaquil_sketched.jpg";
 import { PokeCard } from "../PokeCard/PokeCard";
 
 interface IDashboardProps {
@@ -44,15 +44,24 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
           <>
             <div className="top">
               <div className="controls">
-                <img className="pokemon-logo" alt="logo" src={pokemonLogo} />
+                <div className="logotype">
+                  {/* Insert generated logotype here */}
+                  <img src={pokemonLogo} alt="asdf" />
+                </div>
                 <div className="btns">
-                  <Button className="pack" onClick={buyPack}>
+                  <Button
+                    className="pack"
+                    onClick={buyPack}
+                    disabled={cardArray.length > 0}
+                  >
                     Buy Pack, 5 Coins
                   </Button>
                   <PokeDex collectedPokemons={collectedPokemons} />
                   <h2>Coins: {pokemonContext.coins}</h2>
                 </div>
               </div>
+            </div>
+            <div className="bot">
               <div className="pokemon-container">
                 {cardArray.map((pokemon: any, index: any) => (
                   <PokeCard
@@ -72,7 +81,6 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
                 ))}
               </div>
             </div>
-            <div className="bot"></div>
           </>
         )}
       </div>

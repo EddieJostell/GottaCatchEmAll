@@ -19,31 +19,37 @@
 
       .controls {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: flex-start;
+        justify-content: space-between;
         margin-right: 2rem;
 
-        .pokemon-logo {
-          width: 600px;
-          height: 250px;
+        .logotype {
           margin-bottom: 10rem;
+          img {
+            width: 300px;
+            height: 250px;
+          }
         }
 
         .btns {
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
           padding-left: 3rem;
 
-          .pack {
+          /*  .pack {
             margin-bottom: 2rem;
           }
 
           .dex-btn {
             margin-bottom: 2rem;
-          }
+          } */
         }
       }
+    }
+    .bot {
       .pokemon-container {
         display: flex;
         flex-direction: row;
@@ -51,6 +57,9 @@
         flex-wrap: wrap;
         gap: 28px;
         margin-top: 80px;
+      }
+      .row {
+        margin-bottom: 1.5rem;
       }
     }
   }
