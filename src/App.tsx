@@ -80,7 +80,7 @@ function App() {
   };
 
   const buyPack = () => {
-    if (pokemonContext.coins >= 5) {
+    if (pokemonContext.coins >= 5 && cardArray.length === 0) {
       for (let i = 0; i < 5; i++) {
         const randomCard =
           allPokemons[Math.floor(Math.random() * allPokemons.length)];
