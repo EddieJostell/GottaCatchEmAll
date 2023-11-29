@@ -21,10 +21,7 @@ function App() {
   const [cardIsVisible, setCardIsVisible] = useState<boolean>(false);
 
   const handleStartGame = () => {
-    const randomCard =
-      allPokemons[Math.floor(Math.random() * allPokemons.length)];
     setStartGame(!startGame);
-    cardArray.push(randomCard);
     setCardArray([...cardArray]);
   };
 
