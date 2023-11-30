@@ -15,8 +15,34 @@
 
 //Nested Modal, if you click on a pokemon in pokedex. This will render.
 .nestedModal {
-  .modal-title {
+  .header {
+    display: flex !important;
+    flex-direction: column !important;
     color: #fff;
+    .modal-title {
+      width: 100%;
+      .top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .mid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          width: 200px !important;
+        }
+      }
+
+      .bot {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
   }
 
   //HeaderRow
@@ -37,11 +63,63 @@
     .box-col {
       margin: 8px 0;
     }
+
+    .Stats {
+      position: relative;
+      margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .hp {
+        margin-bottom: -50px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .special-atk,
+      .special-def,
+      .atk,
+      .def {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hexagon-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+
+        .leftOfhex {
+          height: 200px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+
+        .rightOfhex {
+          height: 200px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+      }
+      .speed {
+        margin-top: -60px;
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+      }
+    }
   }
 
   //Modalbody
   &-body {
-    min-height: 600px;
+    min-height: 450px;
 
     .stat-about-answer {
       font-weight: 700;
