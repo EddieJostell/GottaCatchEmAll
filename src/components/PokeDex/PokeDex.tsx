@@ -4,9 +4,23 @@ import React, {
   FunctionComponent,
   useState,
 } from "react";
-import { Button, Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
+import {
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Row,
+  Col,
+  Container,
+} from "reactstrap";
 import "./pokeDex.scss";
-
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+} from "recharts";
 export interface IPokeDexProps {
   collectedPokemons: any;
 }
@@ -81,58 +95,85 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
     }
   };
 
-  const handleColor = (): CSSProperties => {
+  const handleStrokeFillColor = (): CSSProperties => {
     let pokemonType: string = "";
     pokemonType = storedPokemon.types[0].type.name;
 
     switch (pokemonType) {
       case "bug":
-        return { color: "#89ed89" };
+        return { stroke: "#89ed89", fill: "#89ed89" };
       case "dark":
-        return { color: "#303030" };
+        return { stroke: "#303030", fill: "#303030" };
       case "dragon":
-        return { color: "#010140" };
+        return { stroke: "#010140", fill: "#010140" };
       case "electric":
-        return { color: "#c5c501" };
+        return { stroke: "#c5c501", fill: "#c5c501" };
       case "fairy":
-        return { color: "#fdc1cb" };
+        return { stroke: "#fdc1cb", fill: "#fdc1cb" };
       case "fighting":
-        return { color: "#c98507" };
+        return { stroke: "#c98507", fill: "#c98507" };
       case "fire":
-        return { color: "#8d0606" };
+        return { stroke: "#8d0606", fill: "#8d0606" };
       case "flying":
-        return { color: "#afdbe9" };
+        return { stroke: "#8d0606", fill: "#8d0606" };
       case "ghost":
-        return { color: "#540054" };
+        return { stroke: "#540054", fill: "#540054" };
       case "grass":
-        return { color: "#028d02" };
+        return { stroke: "#028d02", fill: "#028d02" };
       case "ground":
-        return { color: "#603719" };
+        return { stroke: "#603719", fill: "#603719" };
       case "ice":
-        return { color: "#448e9d" };
+        return { stroke: "#448e9d", fill: "#448e9d" };
       case "normal":
-        return { color: "#c5c4c4" };
+        return { stroke: "#c5c4c4", fill: "#c5c4c4" };
       case "poison":
-        return { color: "#952795" };
+        return { stroke: "#952795", fill: "#952795" };
       case "psychic":
-        return { color: "#f9b0bb" };
+        return { stroke: "#f9b0bb", fill: "#f9b0bb" };
       case "rock":
-        return { color: "#4a4747" };
+        return { stroke: "#4a4747", fill: "#4a4747" };
       case "steel":
-        return { color: "#279b8f" };
+        return { stroke: "#279b8f", fill: "#279b8f" };
       case "water":
-        return { color: "#0f56a7" };
+        return { stroke: "#0f56a7", fill: "#0f56a7" };
       default:
         return { background: undefined };
     }
   };
+
+  const data = [
+    {
+      subject: storedPokemon.stats[0].stat.name,
+      A: storedPokemon.stats[0].base_stat,
+    },
+    {
+      subject: storedPokemon.stats[1].stat.name,
+      A: storedPokemon.stats[1].base_stat,
+    },
+    {
+      subject: storedPokemon.stats[2].stat.name,
+      A: storedPokemon.stats[2].base_stat,
+    },
+    {
+      subject: storedPokemon.stats[5].stat.name,
+      A: storedPokemon.stats[5].base_stat,
+    },
+    {
+      subject: storedPokemon.stats[4].stat.name,
+      A: storedPokemon.stats[4].base_stat,
+    },
+    {
+      subject: storedPokemon.stats[3].stat.name,
+      A: storedPokemon.stats[3].base_stat,
+    },
+  ];
 
   const renderModal = (): JSX.Element => {
     const sortedPokemonArray = collectedPokemons
       .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
       .map((pokemon: any, index: any) => (
         <div
-          className="col-2 CollectedPokemonContainer"
+          className="PokeDex-entry"
           key={index}
           onClick={() => toggleNested(pokemon)}
         >
@@ -167,7 +208,9 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
             PokeDex | Collected {collectedPokemons.length} / 1281
           </ModalHeader>
           <ModalBody>
-            <div className="row">{sortedPokemonArray}</div>
+            <Container fluid className="CollectedPokemonContainer">
+              {sortedPokemonArray}
+            </Container>
           </ModalBody>
         </Modal>
 
@@ -219,82 +262,92 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                       Stats
                     </h4>
                   </Col>
-                  <Col>
-                    <h4
-                      className={`${viewStat === "Sprites" && "active"}`}
-                      onClick={() => setViewStat("Sprites")}
-                    >
-                      Sprites
-                    </h4>
-                  </Col>
-                  <Col>
-                    <h4
-                      className={`${viewStat === "Moves" && "active"}`}
-                      onClick={() => setViewStat("Moves")}
-                    >
-                      Moves
-                    </h4>
-                  </Col>
                 </Row>
                 <Row className="nestedModal-content-row">
                   {viewStat === "About" && (
-                    <Row>
-                      <Col xs="12" className="box-col">
+                    <>
+                      <Col
+                        xs="12"
+                        className="box-col"
+                        style={{ border: "1px solid red" }}
+                      >
                         <Row>
-                          <Col>Height:</Col>
-                          <Col className="stat-about-answer">
-                            {storedPokemon.height}0 (cm)
-                          </Col>
+                          <Col>Height: {storedPokemon.height}0 (cm)</Col>
+                          <Col className="stat-about-answer"></Col>
                         </Row>
                         <Row>
-                          <Col>Weight:</Col>
-                          <Col className="stat-about-answer">
-                            {pokemonKiloConverter(storedPokemon.weight)} (kg)
+                          <Col>
+                            Weight: {pokemonKiloConverter(storedPokemon.weight)}
+                            (kg)
                           </Col>
                         </Row>
                       </Col>
-                    </Row>
+                      <Col xs="12" className="box-col">
+                        <Row>
+                          <Row>Normal</Row>
+                          <Col>
+                            <img
+                              alt={storedPokemon.name}
+                              src={storedPokemon.sprites.front_default}
+                            />
+                            <img
+                              alt={storedPokemon.name}
+                              src={storedPokemon.sprites.back_default}
+                            />
+                          </Col>
+                          <Col></Col>
+                        </Row>
+                        <Row>
+                          Rare
+                          <Col>
+                            <img
+                              alt={storedPokemon.name}
+                              src={storedPokemon.sprites.front_shiny}
+                            />
+                          </Col>
+                          <Col>
+                            <img
+                              alt={storedPokemon.name}
+                              src={storedPokemon.sprites.back_shiny}
+                            />
+                          </Col>
+                        </Row>
+                      </Col>
+                      <Col>
+                        {storedPokemon.abilities.map(
+                          (abi: any, index: number) => {
+                            return (
+                              <Row key={index}>
+                                <Col xs="12" className="box-col">
+                                  Innate ability: {abi.ability.name}
+                                </Col>
+                              </Row>
+                            );
+                          }
+                        )}
+                      </Col>
+                    </>
                   )}
                   {viewStat === "Stats" && (
                     <div className="Stats">
-                      <div className="hp">
-                        <span>{storedPokemon.stats[0].stat.name}</span>
-                        <span>{storedPokemon.stats[0].base_stat}</span>
-                      </div>
-                      <div className="hexagon-row">
-                        <div className="leftOfhex">
-                          <div className="special-atk">
-                            <span>sp.atk</span>
-                            <span>{storedPokemon.stats[3].base_stat}</span>
-                          </div>
-                          <div className="special-def">
-                            <span>sp.def</span>
-                            <span>{storedPokemon.stats[4].base_stat}</span>
-                          </div>
-                        </div>
-
-                        <span
-                          className="stats-hexagon"
-                          style={{ ...handleColor(), fontSize: "250px" }}
-                        >
-                          &#x2B22;
-                        </span>
-
-                        <div className="rightOfhex">
-                          <div className="atk">
-                            <span>{storedPokemon.stats[1].stat.name}</span>
-                            <span>{storedPokemon.stats[1].base_stat}</span>
-                          </div>
-                          <div className="def">
-                            <span>{storedPokemon.stats[2].stat.name}</span>
-                            <span>{storedPokemon.stats[2].base_stat}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="speed">
-                        <span>{storedPokemon.stats[5].stat.name}</span>
-                        <span>{storedPokemon.stats[5].base_stat}</span>
-                      </div>
+                      <RadarChart
+                        cx={235}
+                        cy={170}
+                        outerRadius={110}
+                        width={450}
+                        height={300}
+                        data={data}
+                      >
+                        <PolarGrid gridType="circle" />
+                        <PolarAngleAxis dataKey="subject" />
+                        <PolarRadiusAxis />
+                        <Radar
+                          name="Mike"
+                          dataKey="A"
+                          style={handleStrokeFillColor()}
+                          fillOpacity={0.6}
+                        />
+                      </RadarChart>
                     </div>
                   )}
                   {viewStat === "Sprites" && (

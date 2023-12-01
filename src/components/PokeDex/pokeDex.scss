@@ -1,15 +1,25 @@
 .CollectedPokemonContainer {
-  text-align: center;
   position: relative;
 
-  &:hover {
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
 
-  .amount {
-    position: absolute;
-    top: 0;
-    right: 0;
+  .PokeDex-entry {
+    text-align: center;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .amount {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 }
 
@@ -48,6 +58,7 @@
   //HeaderRow
   &-header-row {
     border-bottom: 4px solid gainsboro;
+    text-align: center;
     .active {
       opacity: 100%;
     }
@@ -66,54 +77,11 @@
 
     .Stats {
       position: relative;
-      margin-top: 1.25rem;
+      /*  margin-top: 1.25rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-
-      .hp {
-        margin-bottom: -50px;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .special-atk,
-      .special-def,
-      .atk,
-      .def {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .hexagon-row {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-
-        .leftOfhex {
-          height: 200px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-
-        .rightOfhex {
-          height: 200px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-        }
-      }
-      .speed {
-        margin-top: -60px;
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-      }
+      justify-content: center; */
     }
   }
 
@@ -122,7 +90,7 @@
     min-height: 450px;
 
     .stat-about-answer {
-      font-weight: 700;
+      font-weight: 400;
     }
   }
 }
