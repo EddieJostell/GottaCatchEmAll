@@ -169,42 +169,6 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
 
     console.log("pokemons", storedPokemon);
 
-    /* const data = [
-      { subject: "S1", A: 35 },
-      { subject: "S2", A: 90 },
-      { subject: "S3", A: 50 },
-      { subject: "S4", A: 94 },
-      { subject: "S5", A: 93 },
-      { subject: "S6", A: 100 },
-    ]; */
-
-    /*  const data2 = [
-      {
-        subject: storedPokemon?.stats[0]?.stat?.name,
-        A: storedPokemon?.stats[0]?.base_stat,
-      },
-      {
-        subject: storedPokemon?.stats[1]?.stat?.name,
-        A: storedPokemon?.stats[1]?.base_stat,
-      },
-      {
-        subject: storedPokemon?.stats[2]?.stat?.name,
-        A: storedPokemon.stats[2].base_stat,
-      },
-      {
-        subject: storedPokemon?.stats[5]?.stat?.name,
-        A: storedPokemon?.stats[5]?.base_stat,
-      },
-      {
-        subject: storedPokemon?.stats[4]?.stat?.name,
-        A: storedPokemon?.stats[4]?.base_stat,
-      },
-      {
-        subject: storedPokemon?.stats[3]?.stat?.name,
-        A: storedPokemon?.stats[3]?.base_stat,
-      },
-    ]; */
-
     return (
       <Fragment>
         <Button className="dex-btn" onClick={toggle}>
@@ -340,25 +304,51 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                   )}
                   {viewStat === "Stats" && (
                     <div className="Stats">
-                      <div>ASDF</div>
-                      {/* <RadarChart
-                        cx={235}
-                        cy={170}
-                        outerRadius={110}
-                        width={450}
-                        height={300}
-                        data={data}
-                      >
-                        <PolarGrid gridType="circle" />
-                        <PolarAngleAxis dataKey="subject" />
-                        <PolarRadiusAxis />
-                        <Radar
-                          name="Mike"
-                          dataKey="A"
-                          style={handleStrokeFillColor()}
-                          fillOpacity={0.6}
-                        />
-                      </RadarChart> */}
+                      {storedPokemon && (
+                        <RadarChart
+                          cx={235}
+                          cy={170}
+                          outerRadius={110}
+                          width={450}
+                          height={300}
+                          data={[
+                            {
+                              subject: storedPokemon?.stats[0]?.stat?.name,
+                              A: storedPokemon?.stats[0]?.base_stat,
+                            },
+                            {
+                              subject: storedPokemon?.stats[1]?.stat?.name,
+                              A: storedPokemon?.stats[1]?.base_stat,
+                            },
+                            {
+                              subject: storedPokemon?.stats[2]?.stat?.name,
+                              A: storedPokemon.stats[2].base_stat,
+                            },
+                            {
+                              subject: storedPokemon?.stats[5]?.stat?.name,
+                              A: storedPokemon?.stats[5]?.base_stat,
+                            },
+                            {
+                              subject: storedPokemon?.stats[4]?.stat?.name,
+                              A: storedPokemon?.stats[4]?.base_stat,
+                            },
+                            {
+                              subject: storedPokemon?.stats[3]?.stat?.name,
+                              A: storedPokemon?.stats[3]?.base_stat,
+                            },
+                          ]}
+                        >
+                          <PolarGrid gridType="circle" />
+                          <PolarAngleAxis dataKey="subject" />
+                          <PolarRadiusAxis />
+                          <Radar
+                            name="Mike"
+                            dataKey="A"
+                            style={handleStrokeFillColor()}
+                            fillOpacity={0.6}
+                          />
+                        </RadarChart>
+                      )}
                     </div>
                   )}
                 </Row>
