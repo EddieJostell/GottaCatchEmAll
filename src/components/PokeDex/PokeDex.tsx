@@ -34,9 +34,7 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
   const [nestedModal, setNestedModal] = useState<boolean>(false);
   const [closeAll, setCloseAll] = useState<boolean>(false);
   const [storedPokemon, setStoredPokemon] = useState<any>();
-  const [viewStat, setViewStat] = useState<
-    "About" | "Stats" | "Sprites" | "Moves"
-  >("About");
+  const [viewStat, setViewStat] = useState<"About" | "Stats">("About");
 
   const toggle = () => {
     setModal(!modal);
@@ -141,36 +139,9 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
     }
   };
 
-  const data = [
-    {
-      subject: storedPokemon.stats[0].stat.name,
-      A: storedPokemon.stats[0].base_stat,
-    },
-    {
-      subject: storedPokemon.stats[1].stat.name,
-      A: storedPokemon.stats[1].base_stat,
-    },
-    {
-      subject: storedPokemon.stats[2].stat.name,
-      A: storedPokemon.stats[2].base_stat,
-    },
-    {
-      subject: storedPokemon.stats[5].stat.name,
-      A: storedPokemon.stats[5].base_stat,
-    },
-    {
-      subject: storedPokemon.stats[4].stat.name,
-      A: storedPokemon.stats[4].base_stat,
-    },
-    {
-      subject: storedPokemon.stats[3].stat.name,
-      A: storedPokemon.stats[3].base_stat,
-    },
-  ];
-
   const renderModal = (): JSX.Element => {
     const sortedPokemonArray = collectedPokemons
-      .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
+      .sort((a: any, b: any) => (a.id > b.id ? 1 : -1))
       .map((pokemon: any, index: any) => (
         <div
           className="PokeDex-entry"
@@ -197,6 +168,42 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
     };
 
     console.log("pokemons", storedPokemon);
+
+    /* const data = [
+      { subject: "S1", A: 35 },
+      { subject: "S2", A: 90 },
+      { subject: "S3", A: 50 },
+      { subject: "S4", A: 94 },
+      { subject: "S5", A: 93 },
+      { subject: "S6", A: 100 },
+    ]; */
+
+    /*  const data2 = [
+      {
+        subject: storedPokemon?.stats[0]?.stat?.name,
+        A: storedPokemon?.stats[0]?.base_stat,
+      },
+      {
+        subject: storedPokemon?.stats[1]?.stat?.name,
+        A: storedPokemon?.stats[1]?.base_stat,
+      },
+      {
+        subject: storedPokemon?.stats[2]?.stat?.name,
+        A: storedPokemon.stats[2].base_stat,
+      },
+      {
+        subject: storedPokemon?.stats[5]?.stat?.name,
+        A: storedPokemon?.stats[5]?.base_stat,
+      },
+      {
+        subject: storedPokemon?.stats[4]?.stat?.name,
+        A: storedPokemon?.stats[4]?.base_stat,
+      },
+      {
+        subject: storedPokemon?.stats[3]?.stat?.name,
+        A: storedPokemon?.stats[3]?.base_stat,
+      },
+    ]; */
 
     return (
       <Fragment>
@@ -266,50 +273,53 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                 <Row className="nestedModal-content-row">
                   {viewStat === "About" && (
                     <>
-                      <Col
-                        xs="12"
-                        className="box-col"
-                        style={{ border: "1px solid red" }}
-                      >
-                        <Row>
-                          <Col>Height: {storedPokemon.height}0 (cm)</Col>
-                          <Col className="stat-about-answer"></Col>
-                        </Row>
+                      <Col xs="12" className="box-col">
                         <Row>
                           <Col>
-                            Weight: {pokemonKiloConverter(storedPokemon.weight)}
-                            (kg)
+                            <div style={{ textAlign: "center" }}>
+                              {storedPokemon.name.toUpperCase()} a&nbsp;
+                              {storedPokemon.types[0].type.name.toUpperCase()}
+                              {storedPokemon.types[1]?.type.name
+                                ? " & " +
+                                  storedPokemon.types[1].type.name.toUpperCase()
+                                : null}{" "}
+                              type pokemon that weigh about&nbsp;
+                              {pokemonKiloConverter(storedPokemon.weight)} kg
+                              and measures about {storedPokemon.height}0 cm from
+                              the ground.
+                            </div>
                           </Col>
                         </Row>
                       </Col>
                       <Col xs="12" className="box-col">
                         <Row>
-                          <Row>Normal</Row>
                           <Col>
-                            <img
-                              alt={storedPokemon.name}
-                              src={storedPokemon.sprites.front_default}
-                            />
-                            <img
-                              alt={storedPokemon.name}
-                              src={storedPokemon.sprites.back_default}
-                            />
+                            <div style={{ textAlign: "center" }}>Normal</div>
+                            <div style={{ textAlign: "center" }}>
+                              <img
+                                alt={storedPokemon.name}
+                                src={storedPokemon.sprites.front_default}
+                              />
+                              <img
+                                alt={storedPokemon.name}
+                                src={storedPokemon.sprites.back_default}
+                              />
+                            </div>
                           </Col>
-                          <Col></Col>
-                        </Row>
-                        <Row>
-                          Rare
+
                           <Col>
-                            <img
-                              alt={storedPokemon.name}
-                              src={storedPokemon.sprites.front_shiny}
-                            />
-                          </Col>
-                          <Col>
-                            <img
-                              alt={storedPokemon.name}
-                              src={storedPokemon.sprites.back_shiny}
-                            />
+                            <div style={{ textAlign: "center" }}>Rare </div>
+                            <div style={{ textAlign: "center" }}>
+                              <img
+                                alt={storedPokemon.name}
+                                src={storedPokemon.sprites.front_shiny}
+                              />
+
+                              <img
+                                alt={storedPokemon.name}
+                                src={storedPokemon.sprites.back_shiny}
+                              />
+                            </div>
                           </Col>
                         </Row>
                       </Col>
@@ -330,7 +340,8 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                   )}
                   {viewStat === "Stats" && (
                     <div className="Stats">
-                      <RadarChart
+                      <div>ASDF</div>
+                      {/* <RadarChart
                         cx={235}
                         cy={170}
                         outerRadius={110}
@@ -347,48 +358,8 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
                           style={handleStrokeFillColor()}
                           fillOpacity={0.6}
                         />
-                      </RadarChart>
+                      </RadarChart> */}
                     </div>
-                  )}
-                  {viewStat === "Sprites" && (
-                    <Row>
-                      <Col xs="12" className="box-col">
-                        <img
-                          alt={storedPokemon.name}
-                          src={storedPokemon.sprites.front_default}
-                        />
-                        <img
-                          alt={storedPokemon.name}
-                          src={storedPokemon.sprites.front_shiny}
-                        />
-                        <img
-                          alt={storedPokemon.name}
-                          src={storedPokemon.sprites.back_default}
-                        />
-                        <img
-                          alt={storedPokemon.name}
-                          src={storedPokemon.sprites.back_shiny}
-                        />
-                      </Col>
-                    </Row>
-                  )}
-
-                  {viewStat === "Moves" && (
-                    <>
-                      <Col>
-                        {storedPokemon.abilities.map(
-                          (abi: any, index: number) => {
-                            return (
-                              <Row key={index}>
-                                <Col xs="12" className="box-col">
-                                  {abi.ability.name}
-                                </Col>
-                              </Row>
-                            );
-                          }
-                        )}
-                      </Col>
-                    </>
                   )}
                 </Row>
               </ModalBody>
