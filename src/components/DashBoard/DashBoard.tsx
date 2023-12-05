@@ -5,6 +5,8 @@ import { PokeDex } from "../PokeDex/PokeDex";
 import "./Dashboard.scss";
 import { usePokemonContext } from "../PokemonContext/PokemonContext";
 import pokemonLogo from "../../utils/cyndaquil_sketched.jpg";
+import shoppingBag from "../../utils/Shopping_Bag_icon-icons.com_67506.png";
+import coinBag from "../../utils/Coin_Bag_icon-icons.com_67574.png";
 import { PokeCard } from "../PokeCard/PokeCard";
 
 interface IDashboardProps {
@@ -43,21 +45,25 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
         ) : (
           <>
             <div className="top">
+              {/* <div className="logotype">
+               
+                <img src={pokemonLogo} alt="asdf" />
+              </div> */}
               <div className="controls">
-                <div className="logotype">
-                  {/* Insert generated logotype here */}
-                  <img src={pokemonLogo} alt="asdf" />
-                </div>
-                <div className="btns">
-                  <Button
-                    className="pack"
-                    onClick={buyPack}
-                    disabled={cardArray.length > 0}
-                  >
-                    Buy Pack, 5 Coins
-                  </Button>
-                  <PokeDex collectedPokemons={collectedPokemons} />
-                  <h2>Coins: {pokemonContext.coins}</h2>
+                <Button
+                  className="pack"
+                  onClick={buyPack}
+                  disabled={cardArray.length > 0}
+                >
+                  <div className="shroud"></div>
+                  <img className="bag" src={shoppingBag} alt="Shopping bag" />
+                  <span>Buy Pack</span>
+                </Button>
+
+                <PokeDex collectedPokemons={collectedPokemons} />
+                <div className="bag">
+                  <img src={coinBag} alt="Coin bag" />
+                  <span>Coins: {pokemonContext.coins}</span>
                 </div>
               </div>
             </div>
