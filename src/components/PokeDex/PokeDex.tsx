@@ -4,15 +4,7 @@ import React, {
   FunctionComponent,
   useState,
 } from "react";
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Row,
-  Col,
-  Container,
-} from "reactstrap";
+import { Modal, ModalHeader, ModalBody, Row, Col, Container } from "reactstrap";
 import "./pokeDex.scss";
 import {
   Radar,
@@ -21,6 +13,7 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
 } from "recharts";
+import pokedexLogo from "../../utils/Pokedex_tool_icon-icons.com_67529.png";
 export interface IPokeDexProps {
   collectedPokemons: any;
 }
@@ -171,9 +164,11 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
 
     return (
       <Fragment>
-        <Button className="dex-btn" onClick={toggle}>
-          Go To PokeDex
-        </Button>
+        <div className="pokedex" onClick={toggle}>
+          <img width="180" height="180" src={pokedexLogo} alt="pokedex" />
+          <span>Pokedex</span>
+        </div>
+
         <Modal isOpen={modal} toggle={toggle} size="lg" scrollable fade={false}>
           <ModalHeader toggle={toggle}>
             PokeDex | Collected {collectedPokemons.length} / 1281
@@ -184,7 +179,6 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
             </Container>
           </ModalBody>
         </Modal>
-
         <Modal
           isOpen={nestedModal}
           toggle={toggleNested}
