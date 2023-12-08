@@ -6,6 +6,7 @@ import "./Dashboard.scss";
 import { usePokemonContext } from "../PokemonContext/PokemonContext";
 import pokemonLogo from "../../utils/International_Pokémon_logo.svg.png";
 import { PokeCard } from "../PokeCard/PokeCard";
+import { IdleQuests } from "../IdleQuests/IdleQuests";
 
 interface IDashboardProps {
   startGame: boolean;
@@ -19,19 +20,8 @@ interface IDashboardProps {
   cardArray: [];
 }
 
-export const DashBoard: FunctionComponent<IDashboardProps> = (
-  props: IDashboardProps
-): JSX.Element => {
-  const {
-    buyPack,
-    handleStartGame,
-    startGame,
-    collectedPokemons,
-    cardIsVisible,
-    handleCollectPokemon,
-    cardClick,
-    cardArray,
-  } = props;
+export const DashBoard: FunctionComponent<IDashboardProps> = (props: IDashboardProps): JSX.Element => {
+  const { buyPack, handleStartGame, startGame, cardIsVisible, handleCollectPokemon, cardClick, cardArray } = props;
 
   const { pokemonContext } = usePokemonContext();
 
@@ -49,7 +39,8 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
                   <Button className="pack" onClick={buyPack}>
                     Buy Pack, 5 Coins
                   </Button>
-                  <PokeDex collectedPokemons={collectedPokemons} />
+                  <PokeDex />
+                  <IdleQuests />
                   <h2>Coins: {pokemonContext.coins}</h2>
                 </div>
               </div>
@@ -62,11 +53,7 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (
                     sprites={pokemon.sprites}
                     types={pokemon.types}
                     name={pokemon.name}
-                    addPokemonClick={
-                      cardIsVisible
-                        ? () => handleCollectPokemon(pokemon, index)
-                        : undefined
-                    }
+                    addPokemonClick={cardIsVisible ? () => handleCollectPokemon(pokemon, index) : undefined}
                     cardIsVisible={cardIsVisible}
                   />
                 ))}

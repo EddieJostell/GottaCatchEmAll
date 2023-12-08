@@ -1,19 +1,20 @@
 import React, { CSSProperties, Fragment, FunctionComponent, useState } from "react";
 import { Button, Modal, ModalHeader, ModalBody, Row, Col } from "reactstrap";
 import "./pokeDex.scss";
+import { usePokemonContext } from "../PokemonContext/PokemonContext";
 
-export interface IPokeDexProps {
-  collectedPokemons: any;
-}
+export interface IPokeDexProps {}
 
 export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps): JSX.Element => {
-  const { collectedPokemons } = props;
+  const {} = props;
 
   const [modal, setModal] = useState<boolean>(false);
   const [nestedModal, setNestedModal] = useState<boolean>(false);
   const [closeAll, setCloseAll] = useState<boolean>(false);
   const [storedPokemon, setStoredPokemon] = useState<any>();
   const [viewStat, setViewStat] = useState<"About" | "Stats" | "Sprites" | "Moves">("About");
+
+  const { pokemonContext } = usePokemonContext();
 
   const toggle = () => {
     setModal(!modal);
@@ -73,7 +74,7 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
   };
 
   const renderModal = (): JSX.Element => {
-    const sortedPokemonArray = collectedPokemons
+    const sortedPokemonArray = pokemonContext.collectedPokemons
       .sort((a: any, b: any) => (a.name > b.name ? 1 : -1))
       .map((pokemon: any, index: any) => (
         <div className="col-2 CollectedPokemonContainer" key={index} onClick={() => toggleNested(pokemon)}>
@@ -101,7 +102,9 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
           Go To PokeDex
         </Button>
         <Modal isOpen={modal} toggle={toggle} size="lg" scrollable fade={false}>
-          <ModalHeader toggle={toggle}>PokeDex | Collected {collectedPokemons.length} / 1281</ModalHeader>
+          <ModalHeader toggle={toggle}>
+            PokeDex | Collected {pokemonContext.collectedPokemons.length} / 1281
+          </ModalHeader>
           <ModalBody>
             <div className="row">{sortedPokemonArray}</div>
             <ModalBody>
@@ -156,11 +159,11 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
                           <Row>
                             <Col xs="12" className="box-col">
                               <Row>
-                                <Col>Height:</Col>
+                                <Col>Height</Col>
                                 <Col className="stat-about-answer">{storedPokemon.height}0 (cm)</Col>
                               </Row>
                               <Row>
-                                <Col>Weight:</Col>
+                                <Col>Weight</Col>
                                 <Col className="stat-about-answer">
                                   {pokemonKiloConverter(storedPokemon.weight)} (kg)
                                 </Col>
@@ -172,27 +175,27 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (props: IPokeDexProps):
                           <Row>
                             <Col xs="12" className="box-col">
                               <Row>
-                                <Col>{storedPokemon.stats[0].stat.name}:</Col>
+                                <Col>{storedPokemon.stats[0].stat.name}</Col>
                                 <Col className="stat-about-answer">{storedPokemon.stats[0].base_stat}</Col>
                               </Row>
                               <Row>
-                                <Col>{storedPokemon.stats[1].stat.name}:</Col>
+                                <Col>{storedPokemon.stats[1].stat.name}</Col>
                                 <Col className="stat-about-answer">{storedPokemon.stats[1].base_stat}</Col>
                               </Row>
                               <Row>
-                                <Col>{storedPokemon.stats[2].stat.name}:</Col>
+                                <Col>{storedPokemon.stats[2].stat.name}</Col>
                                 <Col className="stat-about-answer">{storedPokemon.stats[2].base_stat}</Col>
                               </Row>
                               <Row>
-                                <Col>{storedPokemon.stats[3].stat.name}:</Col>
+                                <Col>{storedPokemon.stats[3].stat.name}</Col>
                                 <Col className="stat-about-answer">{storedPokemon.stats[3].base_stat}</Col>
                               </Row>
                               <Row>
-                                <Col>{storedPokemon.stats[4].stat.name}:</Col>
+                                <Col>{storedPokemon.stats[4].stat.name}</Col>
                                 <Col className="stat-about-answer">{storedPokemon.stats[4].base_stat}</Col>
                               </Row>
                               <Row>
-                                <Col>{storedPokemon.stats[5].stat.name}:</Col>
+                                <Col>{storedPokemon.stats[5].stat.name}</Col>
                                 <Col className="stat-about-answer">{storedPokemon.stats[5].base_stat}</Col>
                               </Row>
                             </Col>

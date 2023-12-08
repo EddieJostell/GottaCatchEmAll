@@ -1,19 +1,8 @@
-import React, {
-  CSSProperties,
-  Fragment,
-  FunctionComponent,
-  useState,
-} from "react";
-import {
-  Card,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  CardText,
-  Button,
-} from "reactstrap";
+import React, { CSSProperties, Fragment, FunctionComponent, useState } from "react";
+import { Card, CardBody, CardTitle, CardSubtitle, CardText, Button } from "reactstrap";
 import { motion } from "framer-motion";
 import "./pokeCard.scss";
+import { usePokemonContext } from "../PokemonContext/PokemonContext";
 
 export interface IPokeCardProps {
   id?: number;
@@ -25,26 +14,16 @@ export interface IPokeCardProps {
   cardIsVisible: boolean;
 }
 
-export const PokeCard: FunctionComponent<IPokeCardProps> = (
-  props: IPokeCardProps
-): JSX.Element => {
-  const {
-    id,
-    sprites,
-    types,
-    name,
-    addPokemonClick,
-    cardClick,
-    cardIsVisible,
-  } = props;
+export const PokeCard: FunctionComponent<IPokeCardProps> = (props: IPokeCardProps): JSX.Element => {
+  const { id, sprites, types, name, addPokemonClick, cardClick, cardIsVisible } = props;
   const [isHidden, setIsHidden] = useState<boolean>(true);
+
+  const { pokemonContext } = usePokemonContext();
 
   const handleTypeArray = (valueType: []) => {
     if (Array.isArray(valueType)) {
       return valueType.map((type: any, index: number) => {
-        return (
-          <span key={index}>{type.type.name.toLocaleUpperCase()} &nbsp;</span>
-        );
+        return <span key={index}>{type.type.name.toLocaleUpperCase()} &nbsp;</span>;
       });
     }
   };
@@ -203,15 +182,16 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
     },
   };
 
+  const returnText = () => {
+    const index = pokemonContext.collectedPokemons.filter((p: any) => p.name === name);
+
+    return index.length > 0 ? "Set free" : "Add to Pokedex";
+  };
+
   const twoCards = () => {
     if (isHidden) {
       return (
-        <motion.div
-          variants={Hiddenvariants}
-          initial="initial"
-          animate={variant}
-          onClick={handleAnimateClick}
-        >
+        <motion.div variants={Hiddenvariants} initial="initial" animate={variant} onClick={handleAnimateClick}>
           <motion.div
             className="hiddenCard"
             variants={hoverVariants}
@@ -230,12 +210,7 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
       >
         <Card>
           <CardTitle tag="h5">{id}</CardTitle>
-          <img
-            className="pokeImg"
-            alt="Pokemon Pic"
-            src={sprites.front_default}
-            style={handleBackgroundColor()}
-          />
+          <img className="pokeImg" alt="Pokemon Pic" src={sprites.front_default} style={handleBackgroundColor()} />
           <CardBody>
             <CardSubtitle className="mb-2" tag="h5">
               {name.toLocaleUpperCase()}
@@ -249,7 +224,7 @@ export const PokeCard: FunctionComponent<IPokeCardProps> = (
               outline
               onClick={addPokemonClick}
             >
-              Add to Pokedex
+              {returnText()}
             </Button>
           </CardBody>
         </Card>

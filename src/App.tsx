@@ -1,8 +1,7 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { PokeCard } from "./components/PokeCard/PokeCard";
+import React, { useEffect, useState } from "react";
 import { DashBoard } from "./components/DashBoard/DashBoard";
-import "./App.scss";
 import { usePokemonContext } from "./components/PokemonContext/PokemonContext";
+import "./App.scss";
 
 //Game Engine
 function App() {
@@ -14,16 +13,24 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=200"
-  );
-  const [collectedPokemons, setCollectedPokemons] = useState<any>([]);
+  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=5");
+
+  //Vi behöver localStorage här också, det är arrayen som visar pokemons man köpt innan dom hamnar i pokedex
   const [cardArray, setCardArray] = useState<any>([]);
   const [cardIsVisible, setCardIsVisible] = useState<boolean>(false);
 
+  //Array of Collected Pokemons
+  const [collectedPokemons, setCollectedPokemons] = useState(
+    JSON.parse(localStorage.getItem("collectedPokemons") ?? "null") || []
+  );
+
+  useEffect(() => {
+    localStorage.setItem("collectedPokemons", JSON.stringify(collectedPokemons));
+    setPokemonContext({ ...pokemonContext, collectedPokemons: collectedPokemons });
+  }, [collectedPokemons]);
+
   const handleStartGame = () => {
-    const randomCard =
-      allPokemons[Math.floor(Math.random() * allPokemons.length)];
+    const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
     setStartGame(!startGame);
     cardArray.push(randomCard);
     setCardArray([...cardArray]);
@@ -36,27 +43,24 @@ function App() {
 
     function createPokemonObject(result: any[]) {
       result.forEach(async (pokemon) => {
-        const res = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
-        );
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}`);
         const data = await res.json();
 
         data.cardVisible = false;
-        data.hp = 10;
-        data.attack = 2;
+        data.isBusyOnQuest = false;
 
         setAllPokemons((currentList: any) => [...currentList, data]);
       });
     }
     createPokemonObject(data.results);
   };
+
   useEffect(() => {
     getAllPokemons();
   }, []);
+
   useEffect(() => {
-    const allCardsShown = cardArray.every(
-      (obj: { cardVisible: boolean }) => obj.cardVisible === true
-    );
+    const allCardsShown = cardArray.every((obj: { cardVisible: boolean }) => obj.cardVisible === true);
     setCardIsVisible(allCardsShown);
 
     if (cardArray.length === 0) {
@@ -65,20 +69,15 @@ function App() {
   }, [cardArray]);
 
   const handleCollectPokemon = (poke: any, index: number) => {
-    const indexOfPokemon = collectedPokemons.findIndex(
-      (item: any) => item.id === poke.id
-    );
+    const indexOfPokemon = collectedPokemons.findIndex((item: any) => item.id === poke.id);
 
     if (indexOfPokemon !== -1) {
-      collectedPokemons[indexOfPokemon].collected += 1;
+/*       collectedPokemons[indexOfPokemon].collected += 1;
       const updatedPokemons = Array.from(collectedPokemons);
-      setCollectedPokemons(updatedPokemons);
+      setCollectedPokemons(updatedPokemons); */
     } else {
-      poke.collected = 1;
-      setCollectedPokemons((currentPokemons: any) => [
-        ...currentPokemons,
-        poke,
-      ]);
+/*       poke.collected = 1; */
+      setCollectedPokemons((currentPokemons: any) => [...currentPokemons, poke]);
     }
     setCardArray(cardArray.filter((value: any, i: any) => i !== index));
   };
@@ -86,8 +85,7 @@ function App() {
   const buyPack = () => {
     if (pokemonContext.coins >= 5) {
       for (let i = 0; i < 5; i++) {
-        const randomCard =
-          allPokemons[Math.floor(Math.random() * allPokemons.length)];
+        const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
         cardArray.push(randomCard);
         setCardArray([...cardArray]);
       }
@@ -97,9 +95,7 @@ function App() {
 
   const cardClick = (pokemon: any) => {
     pokemon.cardVisible = true;
-    const allCardsShown = cardArray.every(
-      (obj: { cardVisible: boolean }) => obj.cardVisible === true
-    );
+    const allCardsShown = cardArray.every((obj: { cardVisible: boolean }) => obj.cardVisible === true);
     setCardIsVisible(allCardsShown);
 
     if (cardArray.length === 0) {
@@ -113,7 +109,7 @@ function App() {
         buyPack={buyPack}
         handleStartGame={handleStartGame}
         startGame={startGame}
-        collectedPokemons={collectedPokemons}
+        collectedPokemons={pokemonContext.collectedPokemons}
         allPokemons={allPokemons}
         cardClick={cardClick}
         cardIsVisible={cardIsVisible}

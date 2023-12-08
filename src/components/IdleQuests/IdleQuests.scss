@@ -1,0 +1,26 @@
+.idleQuests {
+  .questBtn {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .pokemonAvatar {
+    min-height: 96px;
+    min-width: 96px;
+
+    img {
+      scale: 2;
+      margin-top: 20px;
+    }
+  }
+
+  .modal-header {
+    background-color: #a77850;
+  }
+
+  .modal-footer {
+    display: block;
+    
+  }
+}
