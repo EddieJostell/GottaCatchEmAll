@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 export interface IPokemonProps {
   coins: number;
-  berries: number,
+  berries: number;
   collectedPokemons: [];
 }
 
@@ -24,8 +24,18 @@ export function usePokemonContext() {
   return useContext(PokemonContext);
 }
 
-export function PlayerContextProvider({ children }: { children: React.ReactNode }) {
-  const [pokemonContext, setPokemonContext] = useState<IPokemonProps>(initialPokemonContext);
+export function PlayerContextProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const [pokemonContext, setPokemonContext] = useState<IPokemonProps>(
+    initialPokemonContext
+  );
 
-  return <PokemonContext.Provider value={{ pokemonContext, setPokemonContext }}>{children}</PokemonContext.Provider>;
+  return (
+    <PokemonContext.Provider value={{ pokemonContext, setPokemonContext }}>
+      {children}
+    </PokemonContext.Provider>
+  );
 }
