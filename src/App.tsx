@@ -30,9 +30,7 @@ function App() {
   }, [collectedPokemons]);
 
   const handleStartGame = () => {
-    const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
     setStartGame(!startGame);
-    cardArray.push(randomCard);
     setCardArray([...cardArray]);
   };
 
@@ -83,7 +81,7 @@ function App() {
   };
 
   const buyPack = () => {
-    if (pokemonContext.coins >= 5) {
+    if (pokemonContext.coins >= 5 && cardArray.length === 0) {
       for (let i = 0; i < 5; i++) {
         const randomCard = allPokemons[Math.floor(Math.random() * allPokemons.length)];
         cardArray.push(randomCard);

@@ -4,7 +4,9 @@ import { IntroScreen } from "../IntroScreen/IntoScreen";
 import { PokeDex } from "../PokeDex/PokeDex";
 import "./Dashboard.scss";
 import { usePokemonContext } from "../PokemonContext/PokemonContext";
-import pokemonLogo from "../../utils/International_Pokémon_logo.svg.png";
+import pokemonLogo from "../../utils/cyndaquil_sketched.jpg";
+import shoppingBag from "../../utils/Shopping_Bag_icon-icons.com_67506.png";
+import coinBag from "../../utils/Coin_Bag_icon-icons.com_67574.png";
 import { PokeCard } from "../PokeCard/PokeCard";
 import { IdleQuests } from "../IdleQuests/IdleQuests";
 
@@ -33,17 +35,29 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (props: IDashboardP
         ) : (
           <>
             <div className="top">
+              {/* <div className="logotype">
+               
+                <img src={pokemonLogo} alt="asdf" />
+              </div> */}
               <div className="controls">
-                <img className="pokemon-logo" alt="logo" src={pokemonLogo} />
-                <div className="btns">
-                  <Button className="pack" onClick={buyPack}>
-                    Buy Pack, 5 Coins
-                  </Button>
-                  <PokeDex />
-                  <IdleQuests />
-                  <h2>Coins: {pokemonContext.coins}</h2>
+                <Button
+                  className="pack"
+                  onClick={buyPack}
+                  disabled={cardArray.length > 0}
+                >
+                  <div className="shroud"></div>
+                  <img className="bag" src={shoppingBag} alt="Shopping bag" />
+                  <span>Buy Pack</span>
+                </Button>
+
+                <PokeDex />
+                <div className="bag">
+                  <img src={coinBag} alt="Coin bag" />
+                  <span>Coins: {pokemonContext.coins}</span>
                 </div>
               </div>
+            </div>
+            <div className="bot">
               <div className="pokemon-container">
                 {cardArray.map((pokemon: any, index: any) => (
                   <PokeCard
@@ -59,7 +73,6 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (props: IDashboardP
                 ))}
               </div>
             </div>
-            <div className="bot"></div>
           </>
         )}
       </div>

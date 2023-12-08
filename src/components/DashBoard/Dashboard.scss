@@ -17,40 +17,81 @@
       display: flex;
       flex-direction: row;
 
-      .controls {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-right: 2rem;
-
-        .pokemon-logo {
-          width: 600px;
+      .logotype {
+        margin-bottom: 10rem;
+        img {
+          width: 300px;
           height: 250px;
-          margin-bottom: 10rem;
         }
+      }
 
-        .btns {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          padding-left: 3rem;
+      .controls {
+        width: 50%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
 
-          .pack {
-            margin-bottom: 2rem;
+        .pack {
+          background: none;
+          border: none;
+          position: relative;
+
+          span {
+            color: #000;
+            font-size: 20px;
           }
 
-          .dex-btn {
-            margin-bottom: 2rem;
+          &.disabled {
+            .shroud {
+              height: 100%;
+              position: absolute;
+              text-decoration: none;
+              top: 0;
+              left: 0;
+              width: 100%;
+              background-color: rgba($color: #000000, $alpha: 0.2);
+            }
+          }
+
+          img {
+            width: 180px;
+            height: 180px;
+            cursor: pointer;
+          }
+        }
+
+        .bag {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          img {
+            width: 180px;
+            height: 180px;
+            cursor: pointer;
+          }
+
+          span {
+            font-size: 20px;
           }
         }
       }
+    }
+    .bot {
+      margin-top: 200px;
       .pokemon-container {
         display: flex;
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
         gap: 28px;
-        margin-top: 80px;
+      }
+      .row {
+        margin-bottom: 1.5rem;
       }
     }
   }

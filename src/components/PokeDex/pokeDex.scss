@@ -1,27 +1,64 @@
 .CollectedPokemonContainer {
-  text-align: center;
   position: relative;
 
-  &:hover {
-    cursor: pointer;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
 
-  .amount {
-    position: absolute;
-    top: 0;
-    right: 0;
+  .PokeDex-entry {
+    text-align: center;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .amount {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
   }
 }
 
 //Nested Modal, if you click on a pokemon in pokedex. This will render.
 .nestedModal {
-  .modal-title {
+  .header {
+    display: flex !important;
+    flex-direction: column !important;
     color: #fff;
+    .modal-title {
+      width: 100%;
+      .top {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .mid {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          width: 200px !important;
+        }
+      }
+
+      .bot {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
   }
 
   //HeaderRow
   &-header-row {
     border-bottom: 4px solid gainsboro;
+    text-align: center;
     .active {
       opacity: 100%;
     }
@@ -37,14 +74,35 @@
     .box-col {
       margin: 8px 0;
     }
+
+    .Stats {
+      position: relative;
+      /*  margin-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; */
+    }
   }
 
   //Modalbody
   &-body {
-    min-height: 600px;
+    min-height: 450px;
 
     .stat-about-answer {
-      font-weight: 700;
+      font-weight: 400;
     }
+  }
+}
+
+.pokedex {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    font-size: 20px;
   }
 }
