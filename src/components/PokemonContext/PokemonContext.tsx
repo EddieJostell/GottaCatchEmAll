@@ -7,7 +7,7 @@ export interface IPokemonProps {
 }
 
 export const initialPokemonContext: IPokemonProps = {
-  coins: 100,
+  coins: 5,
   berries: 0,
   collectedPokemons: [],
 };

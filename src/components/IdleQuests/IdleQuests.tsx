@@ -13,6 +13,7 @@ import {
   Row,
 } from "reactstrap";
 import { quests } from "./Quests";
+import coinBag from "../../utils/Coin_Bag_icon-icons.com_67574.png";
 import "./IdleQuests.scss";
 
 export interface IIdleQuests {}
@@ -77,7 +78,6 @@ export const IdleQuests: FunctionComponent<IIdleQuests> = (props: IIdleQuests): 
       } else {
         //JUSTERA OM MAN INTE KLARAR UPPDRAG
 
-
         const updateRemovePokemon = pokemonContext.collectedPokemons.filter(
           (pokemonQuest: any) => pokemonQuest.id !== pokemon.id
         ) as any;
@@ -127,7 +127,10 @@ export const IdleQuests: FunctionComponent<IIdleQuests> = (props: IIdleQuests): 
 
   return (
     <Fragment>
-      <button onClick={handleToggleQuests}>Idle Quests</button>
+      <div className="bag" onClick={handleToggleQuests}>
+        <img src={coinBag} alt="Coin bag" />
+        <span>Coins (Click for idle quests): {pokemonContext.coins}</span>
+      </div>
       <div>
         <Modal className="idleQuests" isOpen={openQuests} toggle={handleToggleQuests} fade={false}>
           <ModalHeader toggle={handleToggleQuests}>Quest Log</ModalHeader>

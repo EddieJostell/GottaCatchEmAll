@@ -23,26 +23,26 @@ export const quests: Quest[] = [
     aboutQuest: "Discover Hidden Treasures",
     completionPercentage: 80,
     reward: {
-      coins: 8,
+      coins: 10,
     },
-    timer: 6000,
+    timer: 11000,
   },
   {
     questName: "Eddies Bedroom",
     aboutQuest: "Find Arceus",
     completionPercentage: 50,
     reward: {
-      coins: 100,
+      coins: 15,
     },
-    timer: 51000,
+    timer: 11000,
   },
   {
     questName: "Fortress",
-    aboutQuest: "Find Arceus",
-    completionPercentage: 50,
+    aboutQuest: "Find Developer",
+    completionPercentage: 55,
     reward: {
-      coins: 100,
+      coins: 20,
     },
-    timer: 51000,
+    timer: 11000,
   },
 ];

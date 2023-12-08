@@ -13,7 +13,7 @@ function App() {
 
   //Engine State
   const [allPokemons, setAllPokemons] = useState<any>([]);
-  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=5");
+  const [loadPoke, setLoadPoke] = useState("https://pokeapi.co/api/v2/pokemon?limit=200");
 
   //Vi behöver localStorage här också, det är arrayen som visar pokemons man köpt innan dom hamnar i pokedex
   const [cardArray, setCardArray] = useState<any>([]);

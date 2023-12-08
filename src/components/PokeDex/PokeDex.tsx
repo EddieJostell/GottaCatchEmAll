@@ -162,8 +162,6 @@ export const PokeDex: FunctionComponent<IPokeDexProps> = (
       }
     };
 
-    console.log("pokemons", storedPokemon);
-
     return (
       <Fragment>
         <div className="pokedex" onClick={toggle}>

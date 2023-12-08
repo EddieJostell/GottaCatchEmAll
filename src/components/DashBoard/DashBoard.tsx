@@ -40,21 +40,13 @@ export const DashBoard: FunctionComponent<IDashboardProps> = (props: IDashboardP
                 <img src={pokemonLogo} alt="asdf" />
               </div> */}
               <div className="controls">
-                <Button
-                  className="pack"
-                  onClick={buyPack}
-                  disabled={cardArray.length > 0}
-                >
+                <Button className="pack" onClick={buyPack} disabled={cardArray.length > 0}>
                   <div className="shroud"></div>
                   <img className="bag" src={shoppingBag} alt="Shopping bag" />
-                  <span>Buy Pack</span>
+                  <span>Buy Pack (Cost 5 coins)</span>
                 </Button>
-
                 <PokeDex />
-                <div className="bag">
-                  <img src={coinBag} alt="Coin bag" />
-                  <span>Coins: {pokemonContext.coins}</span>
-                </div>
+                <IdleQuests />
               </div>
             </div>
             <div className="bot">
